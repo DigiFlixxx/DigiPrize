@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Admin Input DigiPrize</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Poppins,sans-serif;
+background:#0b0b0b;
+color:#fff;
+line-height:1.6
+}
+
+.container{
+max-width:500px;
+margin:60px auto;
+padding:30px;
+background:#141414;
+border-radius:18px;
+border:1px solid #222
+}
+
+h2{
+text-align:center;
+margin-bottom:25px
+}
+
+.kuponBox{
+background:#111;
+padding:12px;
+border-radius:10px;
+text-align:center;
+font-weight:600;
+margin-bottom:20px;
+border:1px solid #00ff88;
+color:#00ff88
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:10px;
+border:1px solid #222;
+background:#0b0b0b;
+color:#fff;
+font-family:Poppins;
+font-size:14px
+}
+
+input:focus,select:focus{
+outline:none;
+border:1px solid #00ff88
+}
+
+button{
+width:100%;
+padding:14px;
+margin-top:20px;
+border-radius:50px;
+background:#00ff88;
+color:#000;
+font-weight:700;
+border:none;
+cursor:pointer;
+font-family:Poppins;
+transition:.3s
+}
+
+button:hover{
+transform:scale(1.03)
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Input Order DigiPrize</h2>
+
+<div class="kuponBox">
+Kupon Terakhir : <span id="kuponTerakhir">Loading...</span>
+</div>
+
+<input id="nama" placeholder="Nama Pembeli">
+<input id="wa" placeholder="Nomor WhatsApp">
+<input id="gmail" placeholder="Gmail">
+<input id="kupon" placeholder="Nomor Kupon (contoh: 1-025)">
+<input id="referral" placeholder="Kode Referral (jika ada)">
+
+<select id="kategori"></select>
+
+<select id="produk">
+<option value="">Pilih Produk</option>
+</select>
+
+<button onclick="kirim()">Simpan Data</button>
+
+</div>
+
+<script>
+
+const url="https://script.google.com/macros/s/AKfycbwN3DpqWUa9cjONPMa7GmohEDa3zku4KhR5zjsUU-eNx7bd6v2F6QqheeinvjUA2Xk1/exec"
+
+
+const linkProduk={
+
+"Ebook 100 Juta Pertama dari Toko Online":"https://drive.google.com/drive/folders/16WOZmhdtXlEfA2Cm7MX5_du9ZW83Qrjx?usp=sharing",
+"Ebook 125 Contekan Iklan Tinggal Copy Paste":"https://drive.google.com/drive/folders/18kl7G7Kgdk4QswlimUHIqrZrVsZTaVAh?usp=sharing",
+"Ebook Modal AI dapat Cuan":"https://drive.google.com/open?id=1P9Zyufi-ak_8ZxoNdLPVKDd4P3FmaZYL",
+"Ebook 200 Prompt AI Kucing":"https://drive.google.com/drive/folders/18F_cnP33Ho1105kFdIUjZs0Kc4VH-WQt?usp=drive_link",
+"Ebook 1000$ Per Bulan":"https://drive.google.com/drive/folders/1QMHZeik1n76f8ADTAytdZwayb6iXSJ-4?usp=sharing",
+"Ebook Dropship Mastery":"https://drive.google.com/drive/folders/1U7rZbXJETYLyrwgkLX4FQyzWVPieuJ-7?usp=sharing",
+"Ebook Technical Analysis For Mega Profit":"https://drive.google.com/drive/folders/10H_HNhpu0Gb5eeb-hxeLZYCGVeg-y_qw?usp=sharing",
+"Ecourse Dewa Selling":"https://drive.google.com/drive/folders/1iSsgIwqeJJ_0G8GXUWbL5EJvt1e2T8DI?usp=sharing",
+"Ecourse Dropship Facebook":"https://drive.google.com/drive/folders/1eUsStQwSMjE2eR1UEpi5_a7gzeu3exk0?usp=sharing",
+"Ecourse Facebook Pro - Cara Cuan dari FB Pro":"https://drive.google.com/open?id=1HNlRwhuwSW6FKwwP5B-_stE3H9HB4494",
+"Ecourse Materi Komunitas Kreator":"https://drive.google.com/drive/folders/10sgCwcPs7Lgt8tPSZyoNLA79vBzRQR_l?usp=drive_link",
+"E-Course Digital Ads Mastery":"https://drive.google.com/drive/folders/192Sg4qDjmHJQFw6j9fr_-x7b_T7t70wG?usp=drive_link",
+"Ecourse Youtube Alur Cerita Film":"https://drive.google.com/drive/folders/1cC0O11ycMHwyzKR6J8sL7GKnn-TE0N10",
+
+"Bot Forex Gold Catcher V3":"https://drive.google.com/drive/folders/1uKpLCHdQOQRmuZJ7Dp6iYzRksIeVWhxx?usp=sharing",
+"Indicator MT4 Pattern Penampil Pola Candlestick":"https://drive.google.com/drive/folders/1FU-Kbd-JNXca14yiXxKSWAxmXfqEKhCR?usp=sharing",
+"Indicator MT4 Short Trading":"https://drive.google.com/drive/folders/1EMRolJBwBrOMa-Xcyperdv1Pew3WPDv1?usp=sharing",
+"Indicator MT4 Spider Strategy":"https://drive.google.com/drive/u/0/folders/1sZQ01SpqNyyGuJITrCgIcs6uXe6OBM1h",
+
+"Template Desain Power Point Pendidikan Guru Kreatif":"https://drive.google.com/drive/folders/1lFDQcZ9BmM4YLLzc5toKUvEhe_dcJZlB?usp=sharing",
+"Template Desain Power Point Presentation Maniac":"https://drive.google.com/file/d/1MxXQZLhFeO7hfw6ptYZ3Pgp5QWW7p6tJ/view?usp=sharing",
+"Template IG Feed dan Story":"https://drive.google.com/drive/folders/1PpSSDyae7Qni5kqMJ73wCusPc9VtwfHw?usp=sharing",
+"Template Tema Blogger Blogspot":"https://drive.google.com/drive/folders/1NTyYXw2RKtEzGK2Y25oLwp4OWJMsN90c?usp=sharing",
+"Gudang Template Power Point V.02":"https://drive.google.com/drive/folders/1kqGi-ygV-f9ebndKp_I5wyvle2J4-Ytm?usp=sharing",
+"Premium Elementor Template":"https://drive.google.com/drive/folders/1G7RkmtebgJ4WTGK-H7-7PaZU3Oe2AzM9?usp=drive_link",
+"Toko Whatsapp Blogspot":"https://drive.google.com/drive/folders/1oNhL8CdGsq-YewMwTA-wZVyh4LwrIPin?usp=drive_link",
+
+"Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload":"https://drive.google.com/drive/folders/1w7YMpzUby4GnCy3JO3NyQfu0Ch2FF5Dj",
+"Video Konten Kucing - Video Konten Viral No Watermark Siap Upload":"https://drive.google.com/open?id=1-tMMiUCrDFySyk7NQJCay6yuJiOi1n7U",
+"3600+ Video Review Produk Unik":"https://drive.google.com/open?id=18dswcmG46mvRZQQ_Uzf-w-9Pco7MuS2c",
+"6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet":"https://drive.google.com/drive/folders/1S1hY8LICnEWYtcK7cISB3NoSh7zcZcVr",
+"1500+ Video Konten Tools Tips Peralatan":"https://drive.google.com/drive/folders/1lkEuh4qPPD57u5Eo_Sf_6IElRrsvajI_?usp=drive_open",
+"1000+ Video Konten Mainan Anak Anak":"https://drive.google.com/open?id=1yGgrJ2HsJmbxXmeKABfKFGiryHnfsIgD",
+"1500+ Video Konten Mobil Mewah Sport":"https://drive.google.com/drive/folders/1RVMMH1PfokUgeZSEmI5Cxz5Dg7R9u1ZJ?usp=drive_open",
+"1500+ Video Konten Gagal Lucu":"https://drive.google.com/drive/folders/1JrFHPCGZTMd2LJU5S-STr-9Om3O2gtBN",
+"1000+ Video Konten Alam Pemandangan":"https://drive.google.com/open?id=1WDNxLGdakC8UhBDEJ4EkRUwcMuLupEdn",
+"7500 Video Konten Video Viral":"https://drive.google.com/drive/folders/1o__HMBkLOy2MPUiDEMdcy-i8c30lzeuv?usp=drive_link",
+"4500++ Video Sale Sosmed Tinggal Upload":"https://drive.google.com/drive/folders/18G-8lOdpDZQ9r0gBEwjg9CufFodi4oCd?usp=sharing",
+"1000+ Video Kuliner Unik India":"https://drive.google.com/drive/folders/1aM6zmWUUPJI-2Ys308skRD_bi0IFIuIR",
+"5000+ Video Konten Lucu Kocak":"https://drive.google.com/drive/folders/1FD8dIGJ7ueyarx3sB4NIUYwnn-z08aTH",
+"1000++ Cuplikan Film Siap Upload":"https://drive.google.com/drive/folders/1wQ2A2YUckX3TPpgQvnHdp6J5_trWuRux",
+"1000+ Video Stock Footage Landscape Tema Angker":"https://drive.google.com/open?id=1LRDSWtQU43lbXG2j0Gy6akZShsKZY-nA",
+"1000+ Video Stock Footage Landscape Tema Hantu":"https://drive.google.com/open?id=11S7_fe0AshbprNMANQf3Gvuh8DTEjlOL",
+"Video Konten Sepak Bola":"https://drive.google.com/drive/folders/1utfUcZH-Ld69p4RgWC1a0KYL3tHQgfw6?usp=drive_link",
+"Video Konten Wisata Travel Swiss":"https://drive.google.com/drive/folders/1IGIsiI7Ig1VA6pnK4GsoofNsH4otNWu9?usp=drive_link",
+"Video Konten Story Whatsapp":"https://drive.google.com/drive/folders/1_B3cnDTyNHU7nTZpjJuCI2ixc7koUY4C?usp=drive_link",
+"Video Konten Militer":"https://drive.google.com/drive/folders/1gIQ4_xTG10nxHjZjqeSP7btj_MKeMMxX?usp=drive_link",
+"Video Konten Tutorial Desain":"https://drive.google.com/drive/folders/1hhGPuizwKeHfrlfM5kxij6VJvUIYBbvo?usp=drive_link",
+"Video Konten Desain Rumah Modern":"https://drive.google.com/drive/folders/1j-mb7waFJp8GJdRRPJphJJD8Vz7XNAu9?usp=drive_link",
+"Video Konten Motivasi":"https://drive.google.com/drive/folders/1HFe2UmCbjuVbuTZ31swXpcHMOdKyYJj4?usp=drive_link",
+"Video Konten Wisata":"https://drive.google.com/drive/folders/1dUxuOSTqaeDkbbDlKN8e4D3-fpFE9mNM?usp=drive_link",
+"Video Konten Masakan":"https://drive.google.com/drive/folders/1-REUiM9hIxCSmwzl9IObN1hI7efsYIs4?usp=drive_link",
+"Video Konten Barang Unik Cina":"https://drive.google.com/drive/folders/1hVq37vCewcY6nMAlJfWzVPRpoYRbyvFj?usp=drive_link",
+"Video Konten Mukbang":"https://drive.google.com/drive/folders/1nDHdzeYYcMCaSL6BUM_I1K-fj7_z3PNe?usp=drive_link",
+"Video Konten Mainan Anak":"https://drive.google.com/drive/folders/15-bdAHf1EVzeEqK_TFHYN_HZz8ldiZnd?usp=drive_link",
+"Video Konten Mancing Mania":"https://drive.google.com/drive/folders/1R3hmRWt6xi8Mjmm5JHqnGQM-WROutUog?usp=drive_link",
+"Video Konten Film Part":"https://drive.google.com/drive/folders/1mpeozq9Lc0AgB0fdY7XULH6qP17RJ_Uq?usp=drive_link",
+"Video Konten Game Mobile Legend":"https://drive.google.com/drive/folders/1NBSZK8U7Zp1Pk5rSkMuYSNy4mXFQrRnI?usp=drive_link",
+"Video Konten Craft":"https://drive.google.com/drive/folders/1xwzGJNN7fLRlba1Wwcp03-VbPCjbQQrY?usp=drive_link",
+"Video Konten Islam":"https://drive.google.com/drive/folders/16EtLTYH1JfvC8uCF4UO9d1Cc2qdy4UFA?usp=drive_link",
+"Video Konten Film Kartun":"https://drive.google.com/drive/folders/1izJX_9QELNq6aXW-Q6qFhFN1xx8oDat6?usp=drive_link",
+"Video Konten Review Makeup":"https://drive.google.com/drive/folders/1YLHx_U0Qhj027S_y8xoia9ULqmr0otyN?usp=drive_link",
+"Video Konten Lucu Part 2":"https://drive.google.com/drive/folders/1gKU3A9aViJnAqUq7Y-srdJbDY7mqJ98S?usp=drive_link",
+"Video Konten Kucing Part 2":"https://drive.google.com/drive/folders/1Rk0vQ03XYcs8s3OwbuTysIWJk4JqZn1b?usp=drive_link",
+"Video Konten Cuplikan Film Korea":"https://drive.google.com/drive/folders/11zPGtgH92hPkH-OpXBGjfV2VTiiLvQP1?usp=drive_link",
+"Video Konten Baper":"https://drive.google.com/drive/folders/1qcT-be20BdLsp0Sx_L5xacu9OJSWeUMg?usp=drive_link",
+
+"Bot AI Chat-GPT ULTRASCALPER 15 Menit":"https://drive.google.com/drive/folders/15Qj8-swgmgPw-1Q4pT-LEZQll92J-dLY?usp=sharing",
+"Bot AI Chat-GPT PRIMESWING 1 Jam":"https://drive.google.com/drive/folders/1WrOkQTW7e3wh9Bx8nI7ZMDvirefSRLD8?usp=sharing",
+"Bot AI Chat-GPT MASTER CALL 12 tahun trained":"https://drive.google.com/drive/folders/1WgmRU4BhpM90m32eNyB_fiwPp7SyWaVd?usp=sharing",
+"Tool Generator Prompt Voxel Forest Lab":"https://drive.google.com/drive/folders/1kIOXKFMh4cHCAuG_sadHyzKQFE6U5KjY?usp=sharing",
+"Tool Prompt Alam yang Menenangkan Pikiran Gelisah":"https://drive.google.com/drive/folders/1A3N_ou4JSFBbLtMfAJVGuQ24qjgfq3Us?usp=sharing",
+
+"Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload":"https://drive.google.com/drive/folders/1dlAinv0YLF6_B7gMuWDflbs93vOyY9wl?usp=drive_link",
+
+"150 Game PC Dari Gamehouse":"https://drive.google.com/drive/folders/1XQYIrwqn9qC-BY-9D8LnPKFAhk3HlTsj?usp=sharing",
+"FM 2024 Update Liga Indonesia 2026":"https://drive.google.com/drive/folders/1FPH9WhunqhhjIdab_qMlpamlMazOK00a?usp=sharing"
+
+}
+
+
+const produkData={
+
+ebook:{
+title:"EBOOK & ECOURSE CUANABLE",
+items:[
+"Ebook 100 Juta Pertama dari Toko Online",
+"Ebook 125 Contekan Iklan Tinggal Copy Paste",
+"Ebook Modal AI dapat Cuan",
+"Ebook 200 Prompt AI Kucing",
+"Ebook 1000$ Per Bulan",
+"Ebook Dropship Mastery",
+"Ebook Technical Analysis For Mega Profit",
+"Ebook Tutorial Shorts Siap Monet",
+"Ebook Tutorial Banjir Orderan dari Etsy",
+"Ebook Panduan Praktis Membuat Cerita Fiksi",
+"Ecourse Dewa Selling",
+"Ecourse Dropship Facebook",
+"Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+"Ecourse Materi Komunitas Kreator",
+"E-Course Digital Ads Mastery",
+"Ecourse Youtube Alur Cerita Film"
+]
+},
+
+video:{
+title:"VIDEO VIRAL FACTORY",
+items:[
+"Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload",
+"Video Konten Kucing - Video Konten Viral No Watermark Siap Upload",
+"3600+ Video Review Produk Unik",
+"6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet",
+"1500+ Video Konten Tools Tips Peralatan",
+"1000+ Video Konten Mainan Anak Anak",
+"1500+ Video Konten Mobil Mewah Sport",
+"1500+ Video Konten Gagal Lucu",
+"1000+ Video Konten Alam Pemandangan",
+"7500 Video Konten Video Viral",
+"4500++ Video Sale Sosmed Tinggal Upload",
+"1000+ Video Kuliner Unik India",
+"5000+ Video Konten Lucu Kocak",
+"1000++ Cuplikan Film Siap Upload",
+"1000+ Video Stock Footage Landscape Tema Angker",
+"1000+ Video Stock Footage Landscape Tema Hantu",
+"Video Konten Sepak Bola",
+"Video Konten Wisata Travel Swiss",
+"Video Konten Story Whatsapp",
+"Video Konten Militer",
+"Video Konten Tutorial Desain",
+"Video Konten Desain Rumah Modern",
+"Video Konten Motivasi",
+"Video Konten Wisata",
+"Video Konten Masakan",
+"Video Konten Barang Unik Cina",
+"Video Konten Mukbang",
+"Video Konten Mainan Anak",
+"Video Konten Mancing Mania",
+"Video Konten Film Part",
+"Video Konten Game Mobile Legend",
+"Video Konten Craft",
+"Video Konten Islam",
+"Video Konten Film Kartun",
+"Video Konten Review Makeup",
+"Video Konten Lucu Part 2",
+"Video Konten Kucing Part 2",
+"Video Konten Cuplikan Film Korea",
+"Video Konten Baper",
+"Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload"
+]
+},
+
+ai:{
+title:"AI & AUTO MONEY TOOLS",
+items:[
+"Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+"Bot AI Chat-GPT PRIMESWING 1 Jam",
+"Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+"Tool Generator Prompt Voxel Forest Lab",
+"Tool Prompt Alam yang Menenangkan Pikiran Gelisah"
+]
+},
+
+trading:{
+title:"TRADING & PROFIT LAB",
+items:[
+"Bot Forex Gold Catcher V3",
+"Indicator MT4 Pattern Penampil Pola Candlestick",
+"Indicator MT4 Short Trading",
+"Indicator MT4 Spider Strategy"
+]
+},
+
+creator:{
+title:"CREATOR & DESIGN HUB",
+items:[
+"Template Desain Power Point Pendidikan Guru Kreatif",
+"Template Desain Power Point Presentation Maniac",
+"Gudang Template Power Point V.02",
+"Template IG Feed dan Story",
+"Template Tema Blogger Blogspot",
+"Premium Elementor Template",
+"Toko Whatsapp Blogspot"
+]
+},
+
+entertainment:{
+title:"ENTERTAINMENT VAULT",
+items:[
+"150 Game PC Dari Gamehouse",
+"FM 2024 Update Liga Indonesia 2026"
+]
+}
+
+}
+
+
+function loadKategori(){
+
+let kategori=document.getElementById("kategori")
+
+kategori.innerHTML='<option value="">Pilih Kategori</option>'
+
+for(let key in produkData){
+
+let option=document.createElement("option")
+option.value=key
+option.text=produkData[key].title
+
+kategori.appendChild(option)
+
+}
+
+}
+
+
+function updateProduk(){
+
+let kategori=document.getElementById("kategori").value
+let produk=document.getElementById("produk")
+
+produk.innerHTML="<option value=''>Pilih Produk</option>"
+
+if(produkData[kategori]){
+
+produkData[kategori].items.forEach(function(item){
+
+let option=document.createElement("option")
+option.value=item
+option.text=item
+
+produk.appendChild(option)
+
+})
+
+}
+
+}
+
+document.getElementById("kategori").addEventListener("change",updateProduk)
+
+loadKategori()
+
+
+function kirim(){
+
+let nama=document.getElementById("nama").value.trim()
+let wa=document.getElementById("wa").value.trim()
+let gmail=document.getElementById("gmail").value.trim()
+let kupon=document.getElementById("kupon").value.trim()
+let referral=document.getElementById("referral").value.trim()
+let kategori=document.getElementById("kategori").value
+let produk=document.getElementById("produk").value
+
+if(nama==""||wa==""||gmail==""||kupon==""||kategori==""||produk==""){
+alert("Semua field wajib diisi kecuali Kode Referral")
+return
+}
+
+let data={
+nama:nama,
+wa:wa,
+gmail:gmail,
+kupon:kupon,
+referral:referral,
+kategori:kategori,
+produk:produk
+}
+
+fetch(url,{
+method:"POST",
+body:JSON.stringify(data)
+})
+.then(res=>res.text())
+.then(res=>{
+
+let link=linkProduk[produk]||"-"
+
+let kodeRef=wa.slice(-3)+nama.substring(0,2).toUpperCase()
+
+let pesan=`Halo Kak ${nama}
+
+Terima kasih sudah order DigiPrize 🙏
+
+Produk:
+${produk}
+
+Link Produk:
+${link}
+
+Nomor Kupon:
+${kupon}
+
+Kode Referral:
+${kodeRef}
+Setiap pembeli pakai kode kamu = komisi Rp5.000
+Jika pemenang pakai kode kamu = bonus Rp200.000
+
+Update kupon & pemenang cek Instagram DigiPrize.`
+
+window.open("https://wa.me/"+wa+"?text="+encodeURIComponent(pesan),"_blank")
+
+alert("Data berhasil masuk ke Google Sheets")
+
+})
+
+}
+
+
+fetch(url+"?action=kupon")
+.then(res=>res.text())
+.then(data=>{
+document.getElementById("kuponTerakhir").innerText=data
+})
+
+</script>
+
+</body>
+</html>

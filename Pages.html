@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiPrize – Beli Produk & Dapat Hadiah</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Poppins,sans-serif;
+background:#0b0b0b;
+color:#fff;
+line-height:1.6
+}
+.container{max-width:900px;margin:auto;padding:20px}
+
+/* HERO */
+.hero{
+background:linear-gradient(135deg,#111,#1b1b1b);
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+margin-bottom:40px
+}
+.hero h1{font-size:2.05rem;margin-bottom:12px}
+.hero p{opacity:.9;margin-bottom:18px}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+padding:14px 34px;
+border-radius:50px;
+background:#00ff88;
+color:#000;
+font-weight:700;
+text-decoration:none
+}
+
+/* SECTION */
+.section{
+background:#141414;
+border-radius:14px;
+padding:20px;
+text-align:center;
+margin:30px 0;
+border:1px solid #222
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px
+}
+.card{
+background:#141414;
+padding:20px;
+border-radius:14px;
+border:1px solid #222;
+cursor:pointer;
+transition:.3s
+}
+.card:hover{
+transform:translateY(-5px);
+border:1px solid #00ff88
+}
+.card h3{margin-bottom:8px}
+
+/* STICKY */
+.sticky{
+position:fixed;
+bottom:0;left:0;right:0;
+display:flex;
+z-index:999
+}
+.sticky a{
+flex:1;
+padding:14px;
+text-align:center;
+font-weight:700;
+text-decoration:none
+}
+.order{background:#00ff88;color:#000}
+.wa{background:#111;color:#00ff88}
+
+/* FOOTER */
+footer{
+padding:80px 20px 110px;
+text-align:center;
+opacity:.6;
+font-size:.85rem
+}
+
+/* POPUP */
+#popupBatch,#popupProduk{
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:rgba(0,0,0,.85);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999
+}
+.box{
+background:#111;
+padding:30px;
+border-radius:18px;
+width:90%;
+max-width:650px;
+max-height:80%;
+overflow-y:auto;
+border:1px solid #00ff88;
+animation:fadeUp .3s ease;
+text-align:center
+}
+.box h3{color:#00ff88;margin-bottom:15px}
+.box ul{padding-left:18px;text-align:left}
+.box li{margin-bottom:8px;font-size:.9rem}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* FAKE NOTIF */
+#notif{
+position:fixed;
+bottom:90px;
+left:20px;
+background:#111;
+border:1px solid #222;
+border-radius:12px;
+padding:12px 16px;
+font-size:.85rem;
+display:none;
+z-index:9998
+}
+#notif span{color:#00ff88;font-weight:600}
+
+.hero img{
+width:100%;
+max-width:500px;
+height:auto;
+margin:20px auto;
+display:block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<section class="hero">
+<h1>💎 Satu Kali Order, Dapat Produk Digital & Peluang Menang Hadiah!</h1>
+
+<img src="prize.png" alt="Hadiah DigiPrize">
+<p>
+🎁 Hadiah Pilihan:<br>
+✔️ <b>Smartphone Samsung</b><br>
+✔️ <b>5 Speaker Bluetooth Keren</b><br>
+✔️ <b>5 Earbuds TWS Keren</b><br>
+✔️ <b>Hadiah Bonus yang menarik</b>
+</p>
+<p style="font-size:.9rem;opacity:.8">
+⏳<b> Batch akan ditutup jika kupon sudah terpenuhi. <br> Dan akan mulai dari awal lagi.</b>
+</p>
+<a href="https://lynk.id" class="btn">ORDER SEKARANG</a>
+</section>
+
+<section class="grid">
+<div class="card">
+<h3>⚡ Beli Sekali</h3>
+<p>Langsung dapat 1 kupon undian.</p>
+</div>
+<div class="card">
+<h3>🎁 Hadiah Bonus</h3>
+<p>Batch terisi cepat, Ada Hadiah Bonus Menarik.</p>
+</div>
+<div class="card">
+<h3>💰 Bonus Referral</h3>
+<p>Cashback & bonus jika referral menang.</p>
+</div>
+</section>
+
+<section class="section">
+<p>
+✔️ Referral pakai kode kamu → <b>Rp5.000 / orang</b><br>
+✔️ Referral menang hadiah utama → <b>kamu dapat Rp200.000</b>
+</p>
+</section>
+
+<!-- KATEGORI PRODUK -->
+<section class="section">
+<p style="font-weight:600;margin-bottom:14px">
+📂 PRODUK DIGITAL DIGIPRIZE 📂
+</p>
+
+<div class="grid">
+<div class="card" onclick="openProduk('ebook')">💰 <b>Ebook & Ecourse Cuanable</b></div>
+<div class="card" onclick="openProduk('video')">🚀 <b>Video Viral Factory</b></div>
+<div class="card" onclick="openProduk('ai')">🤖 <b>AI & Auto Money Tools</b></div>
+<div class="card" onclick="openProduk('trading')">📊 <b>Trading & Profit Lab</b></div>
+<div class="card" onclick="openProduk('creator')">🎨 <b>Creator & Design Hub</b></div>
+<div class="card" onclick="openProduk('entertainment')">🎬 <b>Entertainment Vault</b></div>
+</div>
+
+<p style="margin-top:14px;font-size:.85rem;opacity:.8">
+Semua produk tetap mendapatkan kupon undian & cashback referral.
+</p>
+</section>
+
+<section class="hero">
+<h2>Batch Hampir Ditutup.</h2>
+<p>Jangan sampai kehabisan kesempatan.</p>
+<a href="https://lynk.id" class="btn">ORDER SEKARANG</a>
+</section>
+
+</div>
+
+<div class="sticky">
+<a href="https://lynk.id" class="order">ORDER SEKARANG</a>
+<a href="https://wa.me/6283142225207?text=Halo%20saya%20ingin%20order%20produk%20DigiPrize" class="wa">CHAT ADMIN</a>
+</div>
+
+<footer>© 2026 DigiPrize</footer>
+
+<!-- POPUP PRODUK -->
+<div id="popupProduk">
+<div class="box">
+<h3 id="produkTitle"></h3>
+<ul id="produkList"></ul>
+<a href="https://lynk.id" class="btn" style="display:block;margin-top:20px">
+ORDER SEKARANG
+</a>
+<button onclick="closeProduk()" style="background:none;border:none;color:#aaa;font-size:.8rem;margin-top:10px">
+Tutup
+</button>
+</div>
+</div>
+
+<!-- POPUP BATCH -->
+<div id="popupBatch">
+<div class="box">
+<h3>⚠️ BATCH HAMPIR BERAKHIR</h3>
+<p style="margin-bottom:20px">
+Kesempatan terbatas. Jangan sampai terlambat.
+</p>
+<a href="https://lynk.id" class="btn" style="display:block;margin-bottom:10px">
+ORDER SEKARANG
+</a>
+<button onclick="closeBatch()" style="background:none;border:none;color:#aaa;font-size:.8rem">
+Nanti dulu
+</button>
+</div>
+</div>
+
+<div id="notif">
+<span id="notifName">Andi</span> – <span id="notifPhone">0812*****092</span><br>
+baru saja order 🎉
+</div>
+
+<script>
+const produkData = {
+
+ebook:{
+title:"EBOOK & ECOURSE CUANABLE",
+items:[
+"Ebook 100 Juta Pertama dari Toko Online",
+"Ebook 125 Contekan Iklan Tinggal Copy Paste",
+"Ebook Modal AI dapat Cuan",
+"Ebook 200 Prompt AI Kucing",
+"Ebook 1000$ Per Bulan",
+"Ebook Dropship Mastery",
+"Ebook Technical Analysis For Mega Profit",
+"Ebook Tutorial Shorts Siap Monet",
+"Ebook Tutorial Banjir Orderan dari Etsy",
+"Ebook Panduan Praktis Membuat Cerita Fiksi",
+"Ecourse Dewa Selling",
+"Ecourse Dropship Facebook",
+"Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+"Ecourse Materi Komunitas Kreator",
+"E-Course Digital Ads Mastery",
+"Ecourse Youtube Alur Cerita Film"
+]
+},
+
+video:{
+title:"VIDEO VIRAL FACTORY",
+items:[
+"Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload",
+"Video Konten Kucing - Video Konten Viral No Watermark Siap Upload",
+"3600+ Video Review Produk Unik",
+"6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet",
+"1500+ Video Konten Tools Tips Peralatan",
+"1000+ Video Konten Mainan Anak Anak",
+"1500+ Video Konten Mobil Mewah Sport",
+"1500+ Video Konten Gagal Lucu",
+"1000+ Video Konten Alam Pemandangan",
+"7500 Video Konten Video Viral",
+"4500++ Video Sale Sosmed Tinggal Upload",
+"1000+ Video Kuliner Unik India",
+"5000+ Video Konten Lucu Kocak",
+"1000++ Cuplikan Film Siap Upload",
+"1000+ Video Stock Footage Landscape Tema Angker",
+"1000+ Video Stock Footage Landscape Tema Hantu",
+"Video Konten Sepak Bola",
+"Video Konten Wisata Travel Swiss",
+"Video Konten Story Whatsapp",
+"Video Konten Militer",
+"Video Konten Tutorial Desain",
+"Video Konten Desain Rumah Modern",
+"Video Konten Motivasi",
+"Video Konten Wisata",
+"Video Konten Masakan",
+"Video Konten Barang Unik Cina",
+"Video Konten Mukbang",
+"Video Konten Mainan Anak",
+"Video Konten Mancing Mania",
+"Video Konten Film Part",
+"Video Konten Game Mobile Legend",
+"Video Konten Craft",
+"Video Konten Islam",
+"Video Konten Film Kartun",
+"Video Konten Review Makeup",
+"Video Konten Lucu Part 2",
+"Video Konten Kucing Part 2",
+"Video Konten Cuplikan Film Korea",
+"Video Konten Baper",
+"Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload"
+]
+},
+
+ai:{
+title:"AI & AUTO MONEY TOOLS",
+items:[
+"Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+"Bot AI Chat-GPT PRIMESWING 1 Jam",
+"Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+"Tool Generator Prompt Voxel Forest Lab",
+"Tool Prompt Alam yang Menenangkan Pikiran Gelisah"
+]
+},
+
+trading:{
+title:"TRADING & PROFIT LAB",
+items:[
+"Bot Forex Gold Catcher V3",
+"Indicator MT4 Pattern Penampil Pola Candlestick",
+"Indicator MT4 Short Trading",
+"Indicator MT4 Spider Strategy"
+]
+},
+
+creator:{
+title:"CREATOR & DESIGN HUB",
+items:[
+"Template Desain Power Point Pendidikan Guru Kreatif",
+"Template Desain Power Point Presentation Maniac",
+"Gudang Template Power Point V.02",
+"Template IG Feed dan Story",
+"Template Tema Blogger Blogspot",
+"Premium Elementor Template",
+"Toko Whatsapp Blogspot"
+]
+},
+
+entertainment:{
+title:"ENTERTAINMENT VAULT",
+items:[
+"150 Game PC Dari Gamehouse",
+"FM 2024 Update Liga Indonesia 2026"
+]
+}
+
+};
+
+function openProduk(k){
+document.getElementById("popupProduk").style.display="flex";
+document.getElementById("produkTitle").innerText=produkData[k].title;
+let list="";
+produkData[k].items.forEach(i=>{list+=`<li>${i}</li>`});
+document.getElementById("produkList").innerHTML=list;
+}
+function closeProduk(){document.getElementById("popupProduk").style.display="none"}
+window.addEventListener("click",function(e){
+if(e.target===document.getElementById("popupProduk")){
+document.getElementById("popupProduk").style.display="none";
+}
+});
+
+setTimeout(()=>{document.getElementById("popupBatch").style.display="flex"},12000);
+
+const names=["Andi","Rizky","Dewi","Budi","Ayu","Fajar","Rina","Agus","Putra"];
+function randomPhone(){
+const start=["0812","0813","0852","0877","0896"];
+const end=Math.floor(100+Math.random()*900);
+return start[Math.floor(Math.random()*start.length)]+"*****"+end;
+}
+function showNotif(){
+document.getElementById("notifName").innerText=names[Math.floor(Math.random()*names.length)];
+document.getElementById("notifPhone").innerText=randomPhone();
+const notif=document.getElementById("notif");
+notif.style.display="block";
+setTimeout(()=>{notif.style.display="none"},4000);
+}
+setInterval(showNotif,20000);
+
+function closeBatch(){
+document.getElementById("popupBatch").style.display="none";
+}
+window.addEventListener("click",function(e){
+if(e.target===document.getElementById("popupBatch")){
+document.getElementById("popupBatch").style.display="none";
+}
+});
+</script>
+
+</body>
+</html>

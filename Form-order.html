@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Konfirmasi Order DigiPrize</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+font-family:Poppins,sans-serif;
+background:#0b0b0b;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding:20px
+}
+
+.formbox{
+width:100%;
+max-width:520px;
+background:#141414;
+padding:35px;
+border-radius:16px;
+border:1px solid #222
+}
+
+h1{
+text-align:center;
+color:#00ff88;
+margin-bottom:10px
+}
+
+p{
+text-align:center;
+font-size:.9rem;
+opacity:.85;
+margin-bottom:25px
+}
+
+input,select{
+width:100%;
+padding:12px;
+margin-bottom:12px;
+border-radius:8px;
+border:1px solid #333;
+background:#0b0b0b;
+color:white;
+font-family:Poppins
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:40px;
+background:#00ff88;
+font-weight:700;
+cursor:pointer;
+margin-top:10px
+}
+
+button:hover{
+opacity:.9
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="formbox">
+
+<h1>Terima Kasih Sudah Order 🙏</h1>
+
+<p>
+Silakan isi data berikut untuk konfirmasi pesanan kamu.
+</p>
+
+<input id="nama" placeholder="Nama">
+
+<input id="wa" placeholder="Nomor WhatsApp" inputmode="numeric" oninput="formatWA(this)">
+
+<input id="gmail" placeholder="Gmail">
+
+<input id="referral" placeholder="Kode Referral (Opsional)">
+
+<select id="kategori" onchange="updateProduk()">
+
+<option value="">Pilih Kategori Produk</option>
+
+<option value="ebook">Ebook & Ecourse</option>
+<option value="video">Video Konten</option>
+<option value="ai">AI Tools</option>
+<option value="trading">Trading Tools</option>
+<option value="creator">Template & Creator</option>
+<option value="entertainment">Entertainment</option>
+
+</select>
+
+<select id="produk">
+<option value="">Pilih Produk</option>
+</select>
+
+<button onclick="kirimWA()">
+Kirim Konfirmasi ke WhatsApp
+</button>
+
+</div>
+
+
+<script>
+
+const produkList={
+
+ebook:[
+"Ebook 100 Juta Pertama dari Toko Online",
+"Ebook 125 Contekan Iklan Tinggal Copy Paste",
+"Ebook Modal AI dapat Cuan",
+"Ebook 200 Prompt AI Kucing",
+"Ebook 1000$ Per Bulan",
+"Ebook Dropship Mastery",
+"Ebook Technical Analysis For Mega Profit",
+"Ebook Tutorial Shorts Siap Monet",
+"Ebook Tutorial Banjir Orderan dari Etsy",
+"Ebook Panduan Praktis Membuat Cerita Fiksi",
+"Ecourse Dewa Selling",
+"Ecourse Dropship Facebook",
+"Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+"Ecourse Materi Komunitas Kreator",
+"Ecourse Youtube Alur Cerita Film",
+"E-Course Digital Ads Mastery"
+],
+
+trading:[
+"Bot Forex Gold Catcher V3",
+"Indicator MT4 Pattern Penampil Pola Candlestick",
+"Indicator MT4 Short Trading",
+"Indicator MT4 Spider Strategy"
+],
+
+ai:[
+"Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+"Bot AI Chat-GPT PRIMESWING 1 Jam",
+"Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+"Tool Generator Prompt Voxel Forest Lab",
+"Tool Prompt Alam yang Menenangkan Pikiran Gelisah"
+],
+
+creator:[
+"Template Desain Power Point Pendidikan Guru Kreatif",
+"Template Desain Power Point Presentation Maniac",
+"Template IG Feed dan Story",
+"Template Tema Blogger Blogspot",
+"Gudang Template Power Point V.02",
+"Premium Elementor Template",
+"Toko Whatsapp Blogspot"
+],
+
+video:[
+"7500 Video Konten Video Viral",
+"4500++ Video Sale Sosmed Tinggal Upload",
+"Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload",
+"3600+ Video Review Produk Unik",
+"6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet",
+"1500+ Video Konten Tools Tips Peralatan",
+"1000+ Video Konten Mainan Anak Anak",
+"1500+ Video Konten Mobil Mewah Sport",
+"1500+ Video Konten Gagal Lucu",
+"1000+ Video Konten Alam Pemandangan",
+"1000+ Video Kuliner Unik India",
+"5000+ Video Konten Lucu Kocak",
+"1000++ Cuplikan Film Siap Upload",
+"1000+ Video Stock Footage Landscape Tema Angker",
+"1000+ Video Stock Footage Landscape Tema Hantu",
+"Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload",
+"Video Konten Kucing - Video Konten Viral No Watermark Siap Upload",
+"Video Konten Sepak Bola",
+"Video Konten Wisata Travel Swiss",
+"Video Konten Story Whatsapp",
+"Video Konten Militer",
+"Video Konten Tutorial Desain",
+"Video Konten Desain Rumah Modern",
+"Video Konten Motivasi",
+"Video Konten Wisata",
+"Video Konten Masakan",
+"Video Konten Barang Unik Cina",
+"Video Konten Mukbang",
+"Video Konten Mainan Anak",
+"Video Konten Mancing Mania",
+"Video Konten Film Part",
+"Video Konten Game Mobile Legend",
+"Video Konten Craft",
+"Video Konten Islam",
+"Video Konten Film Kartun",
+"Video Konten Review Makeup",
+"Video Konten Lucu Part 2",
+"Video Konten Kucing Part 2",
+"Video Konten Cuplikan Film Korea",
+"Video Konten Baper"
+],
+
+entertainment:[
+"150 Game PC Dari Gamehouse",
+"FM 2024 Update Liga Indonesia 2026"
+]
+
+};
+
+
+function updateProduk(){
+
+let kategori=document.getElementById("kategori").value;
+let produk=document.getElementById("produk");
+
+produk.innerHTML="<option value=''>Pilih Produk</option>";
+
+if(produkList[kategori]){
+
+produkList[kategori].forEach(function(item){
+
+let option=document.createElement("option");
+option.value=item;
+option.text=item;
+
+produk.appendChild(option);
+
+});
+
+}
+
+}
+
+
+function formatWA(input){
+
+let angka=input.value.replace(/[^0-9]/g,'');
+
+if(angka.startsWith("08")){
+angka="628"+angka.substring(2);
+}
+
+input.value=angka;
+
+}
+
+
+function kirimWA(){
+
+let nama=document.getElementById("nama").value.trim();
+let wa=document.getElementById("wa").value.trim();
+let gmail=document.getElementById("gmail").value.trim();
+let referral=document.getElementById("referral").value.trim();
+let kategori=document.getElementById("kategori").value;
+let produk=document.getElementById("produk").value;
+
+
+if(nama===""){
+alert("Nama wajib diisi");
+return;
+}
+
+if(wa===""){
+alert("Nomor WhatsApp wajib diisi");
+return;
+}
+
+if(!/^[0-9]+$/.test(wa)){
+alert("Nomor WhatsApp harus berupa angka");
+return;
+}
+
+if(wa.length<10){
+alert("Nomor WhatsApp tidak valid");
+return;
+}
+
+if(gmail===""){
+alert("Gmail wajib diisi");
+return;
+}
+
+if(kategori===""){
+alert("Pilih kategori produk");
+return;
+}
+
+if(produk===""){
+alert("Pilih produk yang dibeli");
+return;
+}
+
+
+let pesan=
+"Saya sudah order ini data yang saya isi\n\n"+
+"Nama : "+nama+"\n"+
+"Nomor WhatsApp : "+wa+"\n"+
+"Gmail : "+gmail+"\n"+
+"Kode Refferal : "+(referral||"-")+"\n"+
+"Kategori Produk : "+kategori+"\n"+
+"Produk yang dibeli : "+produk;
+
+
+let url="https://wa.me/6283142225207?text="+encodeURIComponent(pesan);
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
