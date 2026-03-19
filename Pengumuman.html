@@ -40,7 +40,6 @@
         /* --- MAIN APP --- */
         #mainApp { display: none; padding: 20px; flex-direction: column; align-items: center; }
         
-        /* HEADER BARU */
         .main-title {
             font-size: 2.5rem; font-weight: 900; text-transform: uppercase;
             letter-spacing: 5px; color: white; margin-bottom: 5px;
@@ -90,7 +89,6 @@
             animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        /* Shine Effect */
         .img-container {
             position: relative; width: 220px; height: 220px; margin: 0 auto 20px;
             overflow: hidden; border-radius: 20px;
@@ -112,7 +110,6 @@
         .grand-prize-modal { border-color: var(--gold) !important; box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); }
         .bonus-prize-modal { border-color: var(--bonus-pink) !important; box-shadow: 0 0 80px rgba(255, 0, 255, 0.4); }
 
-        /* History & Batch Panel */
         .history-container { width: 100%; max-width: 650px; background: #111; border-radius: 20px; overflow: hidden; margin-bottom: 20px;}
         .history-table { width: 100%; border-collapse: collapse; }
         .history-table td { padding: 12px 20px; border-bottom: 1px solid #222; }
@@ -161,7 +158,7 @@
 
         <div class="controls">
             <button id="spinBtn" class="btn-main" onclick="startDraw(false)">PUTAR MESIN</button>
-            <button id="bonusBtn" class="btn-main btn-bonus" onclick="startDraw(true)">BONUS (<span id="bonusRem">5</span>)</button>
+            <button id="bonusBtn" class="btn-main btn-bonus" onclick="startDraw(true)">BONUS (<span id="bonusRem">10</span>)</button>
         </div>
 
         <div class="history-container">
@@ -206,7 +203,8 @@
             } else { alert("Password Salah!"); }
         }
 
-        let currentDraw = 1, bonusRemaining = 5, currentBatch = "1", usedNumbers = [], winnersLog = [], isCurrentBonus = false;
+        // PERUBAHAN DISINI: bonusRemaining diubah dari 5 menjadi 10
+        let currentDraw = 1, bonusRemaining = 10, currentBatch = "1", usedNumbers = [], winnersLog = [], isCurrentBonus = false;
         const reelElements = [document.getElementById('reel1'), document.getElementById('reel2'), document.getElementById('reel3'), document.getElementById('reel4')];
 
         function init() {
@@ -237,7 +235,6 @@
             const winStr = winNum.toString().padStart(3, '0');
             const targets = [currentBatch, winStr[0], winStr[1], winStr[2]];
             
-            // DURASI
             let baseDur = 10;
             if (isBonus) baseDur = 13;
             if (!isBonus && currentDraw === 11) baseDur = 18;
