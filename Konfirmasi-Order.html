@@ -263,9 +263,9 @@ function prosesData() {
     const nama = document.getElementById("nama").value.trim();
     const wa = document.getElementById("wa").value.trim();
     const gmail = document.getElementById("gmail").value.trim();
+    const produk = document.getElementById("produk").value;
     const referral = document.getElementById("referral").value.trim() || "-";
     const kategori = document.getElementById("kategori").value;
-    const produk = document.getElementById("produk").value;
     const link_produk = linkProdukList[produk];
 
     if (!nama || !wa || !gmail || !produk) {
@@ -275,58 +275,47 @@ function prosesData() {
     btn.disabled = true;
     btn.innerText = "🔍 Memverifikasi Pembayaran...";
 
-    // LANGKAH 1: Verifikasi via doGet (Pintu Keamanan)
-    // Kita tambahkan timestamp agar browser tidak mengambil data "cache" yang lama
-    const checkURL = `${scriptURL}?email=${encodeURIComponent(gmail)}&t=${new Date().getTime()}`;
+    // LANGKAH 1: Verifikasi via GET
+    // Gunakan cara paling simpel agar tidak memicu CORS error
+    const checkURL = scriptURL + "?email=" + encodeURIComponent(gmail) + "&t=" + new Date().getTime();
 
-    fetch(checkURL, { 
-        method: 'GET',
-        redirect: 'follow' // PENTING: Mengikuti redirect Google
-    })
+    fetch(checkURL) // Tanpa header tambahan, biarkan default
     .then(response => {
-        if (!response.ok) throw new Error("Gagal terhubung ke server verifikasi.");
+        if (!response.ok) throw new Error("Koneksi server terputus.");
         return response.text();
     })
     .then(status => {
-        // Membersihkan spasi atau karakter aneh dari respon server
         const cleanStatus = status.trim().toUpperCase();
 
         if (cleanStatus === "VALID") {
-    btn.innerText = "🚀 Mengirim Akses Produk...";
-    
-    // Gunakan URLSearchParams untuk POST ke Google Script agar lebih stabil
-    let details = new URLSearchParams();
-    details.append('nama', nama);
-    details.append('wa', wa);
-    details.append('gmail', gmail);
-    details.append('referral', referral);
-    details.append('kategori', kategori);
-    details.append('produk', produk);
-    details.append('link_produk', link_produk);
+            btn.innerText = "🚀 Mengirim Akses Produk...";
+            
+            // LANGKAH 2: Kirim data via POST
+            // Kita gunakan URLSearchParams agar formatnya pas untuk Google Sheets
+            let details = new URLSearchParams();
+            details.append('nama', nama);
+            details.append('wa', wa);
+            details.append('gmail', gmail);
+            details.append('referral', referral);
+            details.append('kategori', kategori);
+            details.append('produk', produk);
+            details.append('link_produk', link_produk);
 
-    // LANGKAH 2: Kirim data via doPost
-    return fetch(scriptURL, { 
-        method: 'POST', 
-        mode: 'no-cors', // WAJIB ada di POST agar tidak "Failed to Fetch"
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: details.toString() 
-    });
-        } else if (cleanStatus === "EXPIRED") {
-            throw new Error("Sesi verifikasi habis. Mohon hubungi Admin.");
+            return fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', // WAJIB untuk POST ke Google Script
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: details.toString() 
+            });
         } else if (cleanStatus === "NOT_FOUND") {
-            throw new Error("Email TIDAK TERDETEKSI dalam database pembelian Lynk.id 24 jam terakhir.");
+            throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id 24 jam terakhir.");
         } else {
-            throw new Error("Sistem menolak: Pembayaran belum terverifikasi.");
+            throw new Error("Gagal verifikasi: " + cleanStatus);
         }
     })
     .then(() => {
         alert("✅ KONFIRMASI BERHASIL!\n\nLink akses produk dikirim ke email: " + gmail);
-        btn.disabled = false;
-        btn.innerText = "KONFIRMASI SEKARANG";
-        // Reset Form
-        document.getElementById("nama").value = "";
-        document.getElementById("wa").value = "";
-        document.getElementById("gmail").value = "";
+        location.reload(); // Refresh halaman agar form bersih
     })
     .catch(error => {
         alert("⚠️ " + error.message);
