@@ -298,7 +298,7 @@ function prosesData() {
             alert("✅ KONFIRMASI BERHASIL!\n\nLink produk dan kupon sudah dikirim ke email: " + gmail);
             location.reload();
         } else if (status === "NOT_FOUND") {
-            throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id 24 jam terakhir.");
+            throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id.");
         } else if (status === "EXPIRED") {
             throw new Error("Waktu konfirmasi habis (lebih dari 30 menit).");
         } else {
