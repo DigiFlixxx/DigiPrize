@@ -121,7 +121,7 @@
 
 <script>
 // URL Apps Script Anda
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwoEV5faXgZh8ajGIgVvgHL4IOPFSSBpdz38HSC5eVE9FdN3G5IuitoQHIDynCCE0O3/exec'; 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzzQ763oZkk2w_r7CtUEKDYCwwAtRNRDVMwrGwLaMPg9llP7y7RF_SYQgPTAu-LBoPH/exec'; 
 
 const linkProdukList = {
     "Ebook 100 Juta Pertama dari Toko Online": "https://drive.google.com/drive/folders/16WOZmhdtXlEfA2Cm7MX5_du9ZW83Qrjx?usp=sharing",
@@ -273,49 +273,37 @@ function prosesData() {
     }
 
     btn.disabled = true;
-    btn.innerText = "🔍 Memverifikasi Pembayaran...";
+    btn.innerText = "🚀 Sedang Memproses...";
 
-    // LANGKAH 1: Verifikasi via GET
-    // Gunakan cara paling simpel agar tidak memicu CORS error
-    const checkURL = scriptURL + "?email=" + encodeURIComponent(gmail) + "&t=" + new Date().getTime();
+    let details = new URLSearchParams();
+    details.append('nama', nama);
+    details.append('wa', wa);
+    details.append('gmail', gmail);
+    details.append('referral', referral);
+    details.append('kategori', kategori);
+    details.append('produk', produk);
+    details.append('link_produk', link_produk);
 
-    fetch(checkURL) // Tanpa header tambahan, biarkan default
-    .then(response => {
-        if (!response.ok) throw new Error("Koneksi server terputus.");
-        return response.text();
+    // Kirim data ke Google Script
+    fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: details.toString()
     })
-    .then(status => {
-        const cleanStatus = status.trim().toUpperCase();
+    .then(res => res.text())
+    .then(result => {
+        const status = result.trim().toUpperCase();
 
-        if (cleanStatus === "VALID") {
-            btn.innerText = "🚀 Mengirim Akses Produk...";
-            
-            // LANGKAH 2: Kirim data via POST
-            // Kita gunakan URLSearchParams agar formatnya pas untuk Google Sheets
-            let details = new URLSearchParams();
-            details.append('nama', nama);
-            details.append('wa', wa);
-            details.append('gmail', gmail);
-            details.append('referral', referral);
-            details.append('kategori', kategori);
-            details.append('produk', produk);
-            details.append('link_produk', link_produk);
-
-            return fetch(scriptURL, { 
-                method: 'POST', 
-                mode: 'no-cors', // WAJIB untuk POST ke Google Script
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: details.toString() 
-            });
-        } else if (cleanStatus === "NOT_FOUND") {
+        if (status === "SUCCESS") {
+            alert("✅ KONFIRMASI BERHASIL!\n\nLink produk dan kupon sudah dikirim ke email: " + gmail);
+            location.reload();
+        } else if (status === "NOT_FOUND") {
             throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id 24 jam terakhir.");
+        } else if (status === "EXPIRED") {
+            throw new Error("Waktu konfirmasi habis (lebih dari 30 menit).");
         } else {
-            throw new Error("Gagal verifikasi: " + cleanStatus);
+            throw new Error("Server Response: " + result);
         }
-    })
-    .then(() => {
-        alert("✅ KONFIRMASI BERHASIL!\n\nLink akses produk dikirim ke email: " + gmail);
-        location.reload(); // Refresh halaman agar form bersih
     })
     .catch(error => {
         alert("⚠️ " + error.message);
