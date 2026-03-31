@@ -275,40 +275,49 @@ function prosesData() {
     btn.disabled = true;
     btn.innerText = "🔍 Memverifikasi Pembayaran...";
 
-    // LANGKAH 1: Verifikasi via doGet (Pintu Keamanan Lynk.id)
-    fetch(`${scriptURL}?email=${encodeURIComponent(gmail)}`)
-    .then(response => response.text())
+    // LANGKAH 1: Verifikasi via doGet (Pintu Keamanan)
+    // Kita tambahkan timestamp agar browser tidak mengambil data "cache" yang lama
+    const checkURL = `${scriptURL}?email=${encodeURIComponent(gmail)}&t=${new Date().getTime()}`;
+
+    fetch(checkURL, { 
+        method: 'GET',
+        redirect: 'follow' // PENTING: Mengikuti redirect Google
+    })
+    .then(response => {
+        if (!response.ok) throw new Error("Gagal terhubung ke server verifikasi.");
+        return response.text();
+    })
     .then(status => {
-        if (status === "VALID") {
+        // Membersihkan spasi atau karakter aneh dari respon server
+        const cleanStatus = status.trim().toUpperCase();
+
+        if (cleanStatus === "VALID") {
             btn.innerText = "🚀 Mengirim Akses Produk...";
             
-            // LANGKAH 2: Kirim data via doPost (Logika Utama)
-            let params = new URLSearchParams({
-                nama: nama,
-                wa: wa,
-                gmail: gmail,
-                referral: referral,
-                kategori: kategori,
-                produk: produk,
-                link_produk: link_produk
-            });
+            // LANGKAH 2: Kirim data via doPost
+            let formData = new FormData();
+            formData.append('nama', nama);
+            formData.append('wa', wa);
+            formData.append('gmail', gmail);
+            formData.append('referral', referral);
+            formData.append('kategori', kategori);
+            formData.append('produk', produk);
+            formData.append('link_produk', link_produk);
 
             return fetch(scriptURL, { 
                 method: 'POST', 
-                mode: 'no-cors', // Penting agar tidak kena blokir CORS Google
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params.toString() 
+                body: formData 
             });
-        } else if (status === "EXPIRED") {
-            throw new Error("Sesi verifikasi habis (sudah lewat 30 menit). Mohon hubungi Admin.");
-        } else if (status === "NOT_FOUND") {
-            throw new Error("Email tidak terdeteksi dalam pesanan Lynk.id 24 jam terakhir. Gunakan Email yang sama saat membeli!");
+        } else if (cleanStatus === "EXPIRED") {
+            throw new Error("Sesi verifikasi habis. Mohon hubungi Admin.");
+        } else if (cleanStatus === "NOT_FOUND") {
+            throw new Error("Email TIDAK TERDETEKSI dalam database pembelian Lynk.id 24 jam terakhir.");
         } else {
-            throw new Error("Gagal verifikasi keamanan.");
+            throw new Error("Sistem menolak: Pembayaran belum terverifikasi.");
         }
     })
     .then(() => {
-        alert("✅ KONFIRMASI BERHASIL!\n\nLink akses produk dan nomor kupon undian sudah dikirim ke email: " + gmail + "\n\nSilakan cek folder INBOX atau SPAM.");
+        alert("✅ KONFIRMASI BERHASIL!\n\nLink akses produk dikirim ke email: " + gmail);
         btn.disabled = false;
         btn.innerText = "KONFIRMASI SEKARANG";
         // Reset Form
