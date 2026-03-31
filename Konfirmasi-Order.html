@@ -292,22 +292,25 @@ function prosesData() {
         const cleanStatus = status.trim().toUpperCase();
 
         if (cleanStatus === "VALID") {
-            btn.innerText = "🚀 Mengirim Akses Produk...";
-            
-            // LANGKAH 2: Kirim data via doPost
-            let formData = new FormData();
-            formData.append('nama', nama);
-            formData.append('wa', wa);
-            formData.append('gmail', gmail);
-            formData.append('referral', referral);
-            formData.append('kategori', kategori);
-            formData.append('produk', produk);
-            formData.append('link_produk', link_produk);
+    btn.innerText = "🚀 Mengirim Akses Produk...";
+    
+    // Gunakan URLSearchParams untuk POST ke Google Script agar lebih stabil
+    let details = new URLSearchParams();
+    details.append('nama', nama);
+    details.append('wa', wa);
+    details.append('gmail', gmail);
+    details.append('referral', referral);
+    details.append('kategori', kategori);
+    details.append('produk', produk);
+    details.append('link_produk', link_produk);
 
-            return fetch(scriptURL, { 
-                method: 'POST', 
-                body: formData 
-            });
+    // LANGKAH 2: Kirim data via doPost
+    return fetch(scriptURL, { 
+        method: 'POST', 
+        mode: 'no-cors', // WAJIB ada di POST agar tidak "Failed to Fetch"
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: details.toString() 
+    });
         } else if (cleanStatus === "EXPIRED") {
             throw new Error("Sesi verifikasi habis. Mohon hubungi Admin.");
         } else if (cleanStatus === "NOT_FOUND") {
