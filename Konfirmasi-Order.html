@@ -120,6 +120,7 @@
 </div>
 
 <script>
+// URL Apps Script Anda
 const scriptURL = 'https://script.google.com/macros/s/AKfycbwLmgB3C3oQWd5_CRBpOT_Hib-OX92W0htC6v6oHKSIJ1QM5bW8J1EOeSoXidaippbm/exec'; 
 
 const linkProdukList = {
@@ -262,35 +263,61 @@ function prosesData() {
     const nama = document.getElementById("nama").value.trim();
     const wa = document.getElementById("wa").value.trim();
     const gmail = document.getElementById("gmail").value.trim();
-    const referral = document.getElementById("referral").value.trim();
+    const referral = document.getElementById("referral").value.trim() || "-";
     const kategori = document.getElementById("kategori").value;
     const produk = document.getElementById("produk").value;
+    const link_produk = linkProdukList[produk];
 
-    if (nama === "" || wa === "" || gmail === "" || produk === "") {
+    if (!nama || !wa || !gmail || !produk) {
         alert("Mohon lengkapi semua data!"); return;
     }
 
     btn.disabled = true;
-    btn.innerText = "Memproses...";
+    btn.innerText = "🔍 Memverifikasi Pembayaran...";
 
-    let formData = new FormData();
-    formData.append("nama", nama);
-    formData.append("wa", wa);
-    formData.append("gmail", gmail);
-    formData.append("referral", referral);
-    formData.append("kategori", kategori);
-    formData.append("produk", produk);
-    formData.append("link_produk", linkProdukList[produk]);
+    // LANGKAH 1: Verifikasi via doGet (Pintu Keamanan Lynk.id)
+    fetch(`${scriptURL}?email=${encodeURIComponent(gmail)}`)
+    .then(response => response.text())
+    .then(status => {
+        if (status === "VALID") {
+            btn.innerText = "🚀 Mengirim Akses Produk...";
+            
+            // LANGKAH 2: Kirim data via doPost (Logika Utama)
+            let params = new URLSearchParams({
+                nama: nama,
+                wa: wa,
+                gmail: gmail,
+                referral: referral,
+                kategori: kategori,
+                produk: produk,
+                link_produk: link_produk
+            });
 
-    fetch(scriptURL, { method: 'POST', body: formData })
-    .then(response => {
-        alert("Konfirmasi Berhasil! Silakan cek Gmail Anda untuk mendapatkan link akses.");
+            return fetch(scriptURL, { 
+                method: 'POST', 
+                mode: 'no-cors', // Penting agar tidak kena blokir CORS Google
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: params.toString() 
+            });
+        } else if (status === "EXPIRED") {
+            throw new Error("Sesi verifikasi habis (sudah lewat 30 menit). Mohon hubungi Admin.");
+        } else if (status === "NOT_FOUND") {
+            throw new Error("Email tidak terdeteksi dalam pesanan Lynk.id 24 jam terakhir. Gunakan Email yang sama saat membeli!");
+        } else {
+            throw new Error("Gagal verifikasi keamanan.");
+        }
+    })
+    .then(() => {
+        alert("✅ KONFIRMASI BERHASIL!\n\nLink akses produk dan nomor kupon undian sudah dikirim ke email: " + gmail + "\n\nSilakan cek folder INBOX atau SPAM.");
         btn.disabled = false;
         btn.innerText = "KONFIRMASI SEKARANG";
-        document.querySelectorAll('input, select').forEach(el => el.value = '');
+        // Reset Form
+        document.getElementById("nama").value = "";
+        document.getElementById("wa").value = "";
+        document.getElementById("gmail").value = "";
     })
     .catch(error => {
-        alert("Terjadi gangguan koneksi.");
+        alert("⚠️ " + error.message);
         btn.disabled = false;
         btn.innerText = "COBA LAGI";
     });
