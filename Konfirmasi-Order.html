@@ -121,7 +121,7 @@
 
 <script>
 // URL Apps Script Anda
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwFNILZdUUaQCdkzOd6uBFeO4pfzkJD48L0FyLDtXIk2kzuv85jiYmzRsMolS2myVr3lA/exec'; 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx1MDqqmPElzQs9X2eOSlnUHxrnI3l1tDUhEnbILJTAKiYcbs4LbwN4no8gmrxXSrCDJQ/exec'; 
 
 const linkProdukList = {
     "Ebook 100 Juta Pertama dari Toko Online": "https://drive.google.com/drive/folders/16WOZmhdtXlEfA2Cm7MX5_du9ZW83Qrjx?usp=sharing",
@@ -284,7 +284,6 @@ function prosesData() {
     details.append('produk', produk);
     details.append('link_produk', link_produk);
 
-    // Kirim data ke Google Script
     fetch(scriptURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -298,9 +297,10 @@ function prosesData() {
             alert("✅ KONFIRMASI BERHASIL!\n\nLink produk dan kupon sudah dikirim ke email: " + gmail);
             location.reload();
         } else if (status === "NOT_FOUND") {
-            throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id.");
-        } else if (status === "EXPIRED") {
-            throw new Error("Waktu konfirmasi habis (lebih dari 30 menit).");
+            throw new Error("Email TIDAK TERDETEKSI dalam pesanan Lynk.id. Pastikan Anda sudah membayar.");
+        } else if (status === "QUOTA_FULL") {
+            // RESPON UNTUK LOGIKA PEMBATASAN ITEM
+            throw new Error("Maaf, kupon untuk pembelian ini sudah diambil semua. Jika Anda membeli lebih dari itu di struk yang sama, silakan hubungi Admin.");
         } else {
             throw new Error("Server Response: " + result);
         }
