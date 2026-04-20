@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfirmasi Order DigiPrize Eksklusif</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --real-gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa841e);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .formbox {
+            width: 100%;
+            max-width: 600px;
+            background: #141414;
+            padding: 35px;
+            border-radius: 16px;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { 
+            text-align: center; 
+            background: var(--real-gold);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; 
+            font-size: 1.8rem; 
+        }
+        .warning-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px dashed var(--gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        .warning-box p { color: var(--gold); font-size: 0.85rem; font-weight: 600; line-height: 1.5; }
+        label { display: block; font-size: 0.8rem; margin-bottom: 5px; color: var(--gold); font-weight: 600; margin-top: 15px; }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #0b0b0b;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus, select:focus { border-color: var(--gold); }
+        .product-selection { background: #1a1a1a; padding: 15px; border-radius: 10px; margin-top: 10px; border: 1px solid #222; }
+        .product-row { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #333; }
+        .product-row:last-child { margin-bottom: 0; border-bottom: none; }
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 40px;
+            background: var(--real-gold);
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 30px;
+        }
+        button:hover { transform: translateY(-2px); opacity: 0.9; }
+        button:disabled { background: #555; cursor: not-allowed; }
+        .footer-note { text-align: center; font-size: 0.7rem; margin-top: 20px; opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+<div class="formbox">
+    <h1>Konfirmasi Paket Eksklusif 👑</h1>
+    
+    <div class="warning-box">
+        <p>⚠️ PENTING: Pastikan Email yang Anda masukkan di bawah ini HARUS SESUAI dengan Email saat order di lynk.id.<br>Pilih 5 produk berbeda untuk klaim paket Anda.</p>
+    </div>
+
+    <label>Nama Lengkap</label>
+    <input id="nama" placeholder="Masukkan nama Anda">
+
+    <label>Nomor WhatsApp</label>
+    <input id="wa" placeholder="08..." inputmode="numeric" oninput="formatWA(this)">
+
+    <label>Alamat Gmail</label>
+    <input id="gmail" type="email" placeholder="nama@gmail.com">
+
+    <label>Kode Referral (Optional)</label>
+    <input id="referral" placeholder="Contoh: EDI123">
+
+    <p style="text-align: center; margin-top: 25px; font-size: 0.9rem; color: var(--gold); font-weight: bold;">🎁 PILIH 5 PRODUK DIGITAL</p>
+
+    <div class="product-selection">
+        <div id="selection-container"></div>
+    </div>
+
+    <button id="submitBtn" onclick="prosesData()">KONFIRMASI SEKARANG</button>
+
+    <div class="footer-note">DigiPrize Exclusive © 2026 - Instant Digital Delivery</div>
+</div>
+
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxz0bXDiUyt9WXumTSdhNPcjQTes99-2Ji4hGYERQCTy7Fg6j-_qPDVXywUNF5klpIjQw/exec'; 
+
+const linkProdukList = {
+    "Ebook 100 Juta Pertama dari Toko Online": "https://drive.google.com/drive/folders/16WOZmhdtXlEfA2Cm7MX5_du9ZW83Qrjx?usp=sharing",
+    "Ebook 125 Contekan Iklan Tinggal Copy Paste": "https://drive.google.com/drive/folders/18kl7G7Kgdk4QswlimUHIqrZrVsZTaVAh?usp=sharing",
+    "Ebook Modal AI dapat Cuan": "https://drive.google.com/open?id=1P9Zyufi-ak_8ZxoNdLPVKDd4P3FmaZYL",
+    "Ebook 200 Prompt AI Kucing": "https://drive.google.com/drive/folders/18F_cnP33Ho1105kFdIUjZs0Kc4VH-WQt?usp=drive_link",
+    "Ebook 1000$ Per Bulan": "https://drive.google.com/drive/folders/1QMHZeik1n76f8ADTAytdZwayb6iXSJ-4?usp=sharing",
+    "Ebook Droship Mastery": "https://drive.google.com/drive/folders/1U7rZbXJETYLyrwgkLX4FQyzWVPieuJ-7?usp=sharing",
+    "Ebook Technical Analysis For Mega Profit": "https://drive.google.com/drive/folders/10H_HNhpu0Gb5eeb-hxeLZYCGVeg-y_qw?usp=sharing",
+    "Ecourse Dewa Selling": "https://drive.google.com/drive/folders/1iSsgIwqeJJ_0G8GXUWbL5EJvt1e2T8DI?usp=sharing",
+    "Ecourse Dropship Facebook": "https://drive.google.com/drive/folders/1eUsStQwSMjE2eR1UEpi5_a7gzeu3exk0?usp=sharing",
+    "Ecourse Facebook Pro - Cara Cuan dari FB Pro": "https://drive.google.com/open?id=1HNlRwhuwSW6FKwwP5B-_stE3H9HB4494",
+    "Ecourse Materi Komunitas Kreator": "https://drive.google.com/drive/folders/10sgCwcPs7Lgt8tPSZyoNLA79vBzRQR_l?usp=drive_link",
+    "E-Course Digital Ads Mastery": "https://drive.google.com/drive/folders/192Sg4qDjmHJQFw6j9fr_-x7b_T7t70wG?usp=drive_link",
+    "Bot Forex Gold Catcher V3": "https://drive.google.com/drive/folders/1uKpLCHdQOQRmuZJ7Dp6iYzRksIeVWhxx?usp=sharing",
+    "Indicator MT4 Pattern Penampil Pola Candlestick": "https://drive.google.com/drive/folders/1FU-Kbd-JNXca14yiXxKSWAxmXfqEKhCR?usp=sharing",
+    "Indicator MT4 Short Trading": "https://drive.google.com/drive/folders/1EMRolJBwBrOMa-Xcyperdv1Pew3WPDv1?usp=sharing",
+    "Indicator MT4 Spider Strategy": "https://drive.google.com/drive/u/0/folders/1sZQ01SpqNyyGuJITrCgIcs6uXe6OBM1h",
+    "Template Desain Power Point Pendidikan Guru Kreatif": "https://drive.google.com/drive/folders/1lFDQcZ9BmM4YLLzc5toKUvEhe_dcJZlB?usp=sharing",
+    "Template Desain Power Point Presentation Maniac": "https://drive.google.com/file/d/1MxXQZLhFeO7hfw6ptYZ3Pgp5QWW7p6tJ/view?usp=sharing",
+    "Template IG Feed dan Story": "https://drive.google.com/drive/folders/1PpSSDyae7Qni5kqMJ73wCusPc9VtwfHw?usp=sharing",
+    "Template Tema Blogger Blogspot": "https://drive.google.com/drive/folders/1NTyYXw2RKtEzGK2Y25oLwp4OWJMsN90c?usp=sharing",
+    "Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload": "https://drive.google.com/drive/folders/1w7YMpzUby4GnCy3JO3NyQfu0Ch2FF5Dj",
+    "Video Konten Kucing - Video Konten Viral No Watermark Siap Upload": "https://drive.google.com/open?id=1-tMMiUCrDFySyk7NQJCay6yuJiOi1n7U",
+    "3600+ Video Review Produk Unik": "https://drive.google.com/open?id=18dswcmG46mvRZQQ_Uzf-w-9Pco7MuS2c",
+    "6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet": "https://drive.google.com/drive/folders/1S1hY8LICnEWYtcK7cISB3NoSh7zcZcVr",
+    "1500+ Video Konten Tools Tips Peralatan": "https://drive.google.com/drive/folders/1lkEuh4qPPD57u5Eo_Sf_6IElRrsvajI_?usp=drive_open",
+    "1000+ Video Konten Mainan Anak Anak": "https://drive.google.com/open?id=1yGgrJ2HsJmbxXmeKABfKFGiryHnfsIgD",
+    "1500+ Video Konten Mobil Mewah Sport": "https://drive.google.com/drive/folders/1RVMMH1PfokUgeZSEmI5Cxz5Dg7R9u1ZJ?usp=drive_open",
+    "1500+ Video Konten Gagal Lucu": "https://drive.google.com/drive/folders/1JrFHPCGZTMd2LJU5S-STr-9Om3O2gtBN",
+    "1000+ Video Konten Alam Pemandangan": "https://drive.google.com/open?id=1WDNxLGdakC8UhBDEJ4EkRUwcMuLupEdn",
+    "7500 Video Konten Video Viral": "https://drive.google.com/drive/folders/1o__HMBkLOy2MPUiDEMdcy-i8c30lzeuv?usp=drive_link",
+    "4500++ Video Sale Sosmed Tinggal Upload": "https://drive.google.com/drive/folders/18G-8lOdpDZQ9r0gBEwjg9CufFodi4oCd?usp=sharing",
+    "1000+ Video Kuliner Unik India": "https://drive.google.com/drive/folders/1aM6zmWUUPJI-2Ys308skRD_bi0IFIuIR",
+    "5000+ Video Konten Lucu Kocak": "https://drive.google.com/drive/folders/1FD8dIGJ7ueyarx3sB4NIUYwnn-z08aTH",
+    "1000++ Cuplikan Film Siap Upload": "https://drive.google.com/drive/folders/1wQ2A2YUckX3TPpgQvnHdp6J5_trWuRux",
+    "1000+ Video Stock Footage Landscape Tema Angker": "https://drive.google.com/open?id=1LRDSWtQU43lbXG2j0Gy6akZShsKZY-nA",
+    "1000+ Video Stock Footage Landscape Tema Hantu": "https://drive.google.com/open?id=11S7_fe0AshbprNMANQf3Gvuh8DTEjlOL",
+    "Gudang Template Power Point V.02": "https://drive.google.com/drive/folders/1kqGi-ygV-f9ebndKp_I5wyvle2J4-Ytm?usp=sharing",
+    "Premium Elementor Template": "https://drive.google.com/drive/folders/1G7RkmtebgJ4WTGK-H7-7PaZU3Oe2AzM9?usp=drive_link",
+    "Toko Whatsapp Blogspot": "https://drive.google.com/drive/folders/1oNhL8CdGsq-YewMwTA-wZVyh4LwrIPin?usp=drive_link",
+    "150 Game PC Dari Gamehouse": "https://drive.google.com/drive/folders/1XQYIrwqn9qC-BY-9D8LnPKFAhk3HlTsj?usp=sharing",
+    "Ebook Tutorial Shorts Siap Monet": "https://drive.google.com/drive/folders/1_X40kWMvLPKNL0Y8u1ZEbzuPyh6lpGhq?usp=sharing",
+    "Ebook Tutorial Banjir Orderan dari Etsy": "https://drive.google.com/drive/folders/1JmAMcfc7SlKFxup57rMQ4OZLhR3cnlzR?usp=sharing",
+    "Ebook Panduan Praktis Membuat Cerita Fiksi": "https://drive.google.com/drive/folders/15YI6sd29hHPdZ2ygElgMGt63xBAs8I00?usp=sharing",
+    "Video Konten Sepak Bola": "https://drive.google.com/drive/folders/1utfUcZH-Ld69p4RgWC1a0KYL3tHQgfw6?usp=drive_link",
+    "Video Konten Wisata Travel Swiss": "https://drive.google.com/drive/folders/1IGIsiI7Ig1VA6pnK4GsoofNsH4otNWu9?usp=drive_link",
+    "Video Konten Story Whatsapp": "https://drive.google.com/drive/folders/1_B3cnDTyNHU7nTZpjJuCI2ixc7koUY4C?usp=drive_link",
+    "Video Konten Militer": "https://drive.google.com/drive/folders/1gIQ4_xTG10nxHjZjqeSP7btj_MKeMMxX?usp=drive_link",
+    "Video Konten Tutorial Desain": "https://drive.google.com/drive/folders/1hhGPuizwKeHfrlfM5kxij6VJvUIYBbvo?usp=drive_link",
+    "Video Konten Desain Rumah Modern": "https://drive.google.com/drive/folders/1j-mb7waFJp8GJdRRPJphJJD8Vz7XNAu9?usp=drive_link",
+    "Video Konten Motivasi": "https://drive.google.com/drive/folders/1HFe2UmCbjuVbuTZ31swXpcHMOdKyYJj4?usp=drive_link",
+    "Video Konten Wisata": "https://drive.google.com/drive/folders/1dUxuOSTqaeDkbbDlKN8e4D3-fpFE9mNM?usp=drive_link",
+    "Video Konten Masakan": "https://drive.google.com/drive/folders/1-REUiM9hIxCSmwzl9IObN1hI7efsYIs4?usp=drive_link",
+    "Video Konten Barang Unik Cina": "https://drive.google.com/drive/folders/1hVq37vCewcY6nMAlJfWzVPRpoYRbyvFj?usp=drive_link",
+    "Video Konten Mukbang": "https://drive.google.com/drive/folders/1nDHdzeYYcMCaSL6BUM_I1K-fj7_z3PNe?usp=drive_link",
+    "Video Konten Mainan Anak": "https://drive.google.com/drive/folders/15-bdAHf1EVzeEqK_TFHYN_HZz8ldiZnd?usp=drive_link",
+    "Video Konten Mancing Mania": "https://drive.google.com/drive/folders/1R3hmRWt6xi8Mjmm5JHqnGQM-WROutUog?usp=drive_link",
+    "Video Konten Film Part": "https://drive.google.com/drive/folders/1mpeozq9Lc0AgB0fdY7XULH6qP17RJ_Uq?usp=drive_link",
+    "Video Konten Game Mobile Legend": "https://drive.google.com/drive/folders/1NBSZK8U7Zp1Pk5rSkMuYSNy4mXFQrRnI?usp=drive_link",
+    "Video Konten Craft": "https://drive.google.com/drive/folders/1xwzGJNN7fLRlba1Wwcp03-VbPCjbQQrY?usp=drive_link",
+    "Video Konten Islam": "https://drive.google.com/drive/folders/16EtLTYH1JfvC8uCF4UO9d1Cc2qdy4UFA?usp=drive_link",
+    "Video Konten Film Kartun": "https://drive.google.com/drive/folders/1izJX_9QELNq6aXW-Q6qFhFN1xx8oDat6?usp=drive_link",
+    "Video Konten Review Makeup": "https://drive.google.com/drive/folders/1YLHx_U0Qhj027S_y8xoia9ULqmr0otyN?usp=drive_link",
+    "Video Konten Lucu Part 2": "https://drive.google.com/drive/folders/1gKU3A9aViJnAqUq7Y-srdJbDY7mqJ98S?usp=drive_link",
+    "Video Konten Kucing Part 2": "https://drive.google.com/drive/folders/1Rk0vQ03XYcs8s3OwbuTysIWJk4JqZn1b?usp=drive_link",
+    "Video Konten Cuplikan Film Korea": "https://drive.google.com/drive/folders/11zPGtgH92hPkH-OpXBGjfV2VTiiLvQP1?usp=drive_link",
+    "Video Konten Baper": "https://drive.google.com/drive/folders/1qcT-be20BdLsp0Sx_L5xacu9OJSWeUMg?usp=drive_link",
+    "Bot AI Chat-GPT ULTRASCALPER 15 Menit": "https://drive.google.com/drive/folders/15Qj8-swgmgPw-1Q4pT-LEZQll92J-dLY?usp=sharing",
+    "Bot AI Chat-GPT PRIMESWING 1 Jam": "https://drive.google.com/drive/folders/1WrOkQTW7e3wh9Bx8nI7ZMDvirefSRLD8?usp=sharing",
+    "Bot AI Chat-GPT MASTER CALL 12 tahun trained": "https://drive.google.com/drive/folders/1WgmRU4BhpM90m32eNyB_fiwPp7SyWaVd?usp=sharing",
+    "Tool Generator Prompt Voxel Forest Lab": "https://drive.google.com/drive/folders/1kIOXKFMh4cHCAuG_sadHyzKQFE6U5KjY?usp=sharing",
+    "Tool Prompt Alam yang Menenangkan Pikiran Gelisah": "https://drive.google.com/drive/folders/1A3N_ou4JSFBbLtMfAJVGuQ24qjgfq3Us?usp=sharing",
+    "Ecourse Youtube Alur Cerita Film": "https://drive.google.com/drive/folders/1cC0O11ycMHwyzKR6J8sL7GKnn-TE0N10",
+    "Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload": "https://drive.google.com/drive/folders/1dlAinv0YLF6_B7gMuWDflbs93vOyY9wl?usp=drive_link",
+    "FM 2024 Update Liga Indonesia 2026": "https://drive.google.com/drive/folders/1FPH9WhunqhhjIdab_qMlpamlMazOK00a?usp=sharing"
+};
+
+const produkList = {
+    ebook: [
+        "Ebook 100 Juta Pertama dari Toko Online", "Ebook 125 Contekan Iklan Tinggal Copy Paste", "Ebook Modal AI dapat Cuan", 
+        "Ebook 200 Prompt AI Kucing", "Ebook 1000$ Per Bulan", "Ebook Droship Mastery", "Ebook Technical Analysis For Mega Profit", 
+        "Ebook Tutorial Shorts Siap Monet", "Ebook Tutorial Banjir Orderan dari Etsy", "Ebook Panduan Praktis Membuat Cerita Fiksi", 
+        "Ecourse Dewa Selling", "Ecourse Dropship Facebook", "Ecourse Facebook Pro - Cara Cuan dari FB Pro", 
+        "Ecourse Materi Komunitas Kreator", "Ecourse Youtube Alur Cerita Film", "E-Course Digital Ads Mastery"
+    ],
+    video: [
+        "Video Konten Lucu - Hiburan - Video Konten Viral No Watermark Siap Upload", "Video Konten Kucing - Video Konten Viral No Watermark Siap Upload", 
+        "3600+ Video Review Produk Unik", "6.000++ Video Berbagai Produk & Link Shopee Affiliate - Bikin Konten Anti Ribet", 
+        "1500+ Video Konten Tools Tips Peralatan", "1000+ Video Konten Mainan Anak Anak", "1500+ Video Konten Mobil Mewah Sport", 
+        "1500+ Video Konten Gagal Lucu", "1000+ Video Konten Alam Pemandangan", "7500 Video Konten Video Viral", 
+        "4500++ Video Sale Sosmed Tinggal Upload", "1000+ Video Kuliner Unik India", "5000+ Video Konten Lucu Kocak", 
+        "1000++ Cuplikan Film Siap Upload", "1000+ Video Stock Footage Landscape Tema Angker", "1000+ Video Stock Footage Landscape Tema Hantu", 
+        "Video Konten Sepak Bola", "Video Konten Wisata Travel Swiss", "Video Konten Story Whatsapp", "Video Konten Militer", 
+        "Video Konten Tutorial Desain", "Video Konten Desain Rumah Modern", "Video Konten Motivasi", "Video Konten Wisata", 
+        "Video Konten Masakan", "Video Konten Barang Unik Cina", "Video Konten Mukbang", "Video Konten Mainan Anak", 
+        "Video Konten Mancing Mania", "Video Konten Film Part", "Video Konten Game Mobile Legend", "Video Konten Craft", 
+        "Video Konten Islam", "Video Konten Film Kartun", "Video Konten Review Makeup", "Video Konten Lucu Part 2", 
+        "Video Konten Kucing Part 2", "Video Konten Cuplikan Film Korea", "Video Konten Baper", 
+        "Paket 35.000++ Video Konten - Video Konten Viral No Watermark Siap Upload"
+    ],
+    ai: [
+        "Bot AI Chat-GPT ULTRASCALPER 15 Menit", "Bot AI Chat-GPT PRIMESWING 1 Jam", "Bot AI Chat-GPT MASTER CALL 12 tahun trained", 
+        "Tool Generator Prompt Voxel Forest Lab", "Tool Prompt Alam yang Menenangkan Pikiran Gelisah"
+    ],
+    trading: [
+        "Bot Forex Gold Catcher V3", "Indicator MT4 Pattern Penampil Pola Candlestick", "Indicator MT4 Short Trading", "Indicator MT4 Spider Strategy"
+    ],
+    creator: [
+        "Template Desain Power Point Pendidikan Guru Kreatif", "Template Desain Power Point Presentation Maniac", "Template IG Feed dan Story", 
+        "Template Tema Blogger Blogspot", "Gudang Template Power Point V.02", "Premium Elementor Template", "Toko Whatsapp Blogspot"
+    ],
+    entertainment: [
+        "150 Game PC Dari Gamehouse", "FM 2024 Update Liga Indonesia 2026"
+    ]
+};
+
+function initForm() {
+    const container = document.getElementById('selection-container');
+    for(let i=1; i<=5; i++) {
+        container.innerHTML += `
+            <div class="product-row">
+                <label>Produk ke-${i}</label>
+                <select id="kat${i}" onchange="updateDropdowns()">
+                    <option value="">-- Pilih Kategori --</option>
+                    <option value="ebook">Ebook & Ecourse Mastery</option>
+                    <option value="video">Video Konten Viral</option>
+                    <option value="ai">AI Tools</option>
+                    <option value="trading">Trading Tools</option>
+                    <option value="creator">Template Desain</option>
+                    <option value="entertainment">Entertainment</option>
+                </select>
+                <select id="prod${i}" style="margin-top:5px" onchange="updateDropdowns()">
+                    <option value="">Pilih Kategori Dahulu</option>
+                </select>
+            </div>
+        `;
+    }
+}
+initForm();
+
+function updateDropdowns() {
+    let selectedProducts = [];
+    for(let i=1; i<=5; i++) {
+        let val = document.getElementById("prod"+i).value;
+        if(val) selectedProducts.push(val);
+    }
+
+    for(let i=1; i<=5; i++) {
+        let kat = document.getElementById("kat"+i).value;
+        let prodSelect = document.getElementById("prod"+i);
+        let currentVal = prodSelect.value;
+
+        if(!kat) {
+            prodSelect.innerHTML = "<option value=''>Pilih Kategori Dahulu</option>";
+            continue;
+        }
+
+        let optionsHtml = "<option value=''>-- Pilih Produk --</option>";
+        produkList[kat].forEach(item => {
+            if(!selectedProducts.includes(item) || item === currentVal) {
+                optionsHtml += `<option value="${item}" ${item === currentVal ? 'selected' : ''}>${item}</option>`;
+            }
+        });
+        prodSelect.innerHTML = optionsHtml;
+    }
+}
+
+function formatWA(input) {
+    let angka = input.value.replace(/[^0-9]/g, '');
+    if (angka.startsWith("08")) { angka = "628" + angka.substring(2); }
+    input.value = angka;
+}
+
+function prosesData() {
+    const btn = document.getElementById("submitBtn");
+    const nama = document.getElementById("nama").value.trim();
+    const wa = document.getElementById("wa").value.trim();
+    const gmail = document.getElementById("gmail").value.trim();
+    const referral = document.getElementById("referral").value.trim() || "-";
+    
+    let dipilih = [];
+    let links = [];
+    for(let i=1; i<=5; i++) {
+        let p = document.getElementById("prod" + i).value;
+        if(p) {
+            dipilih.push(p);
+            links.push(linkProdukList[p]);
+        }
+    }
+
+    if (!nama || !wa || !gmail || dipilih.length < 5) {
+        alert("Mohon lengkapi data dan pastikan 5 produk berbeda telah dipilih!"); return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "🚀 Sedang Memproses...";
+
+    let details = new URLSearchParams();
+    details.append('nama', nama);
+    details.append('wa', wa);
+    details.append('gmail', gmail);
+    details.append('referral', referral);
+    details.append('produk_pilihan', dipilih.join(" | "));
+    details.append('link_pilihan', links.join(" | "));
+
+    fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: details.toString()
+    })
+    .then(res => res.text())
+    .then(result => {
+        if (result.trim().toUpperCase() === "SUCCESS") {
+            alert("✅ KONFIRMASI BERHASIL!\n\n5 Produk Digital & Nomor Kupon Eksklusif telah dikirim ke: " + gmail);
+            location.reload();
+        } else {
+            throw new Error(result);
+        }
+    })
+    .catch(error => {
+        alert("⚠️ " + error.message);
+        btn.disabled = false;
+        btn.innerText = "COBA LAGI";
+    });
+}
+</script>
+</body>
+</html>
