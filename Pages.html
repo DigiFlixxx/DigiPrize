@@ -147,6 +147,29 @@ height:auto;
 margin:20px auto;
 display:block;
 }
+
+/* STYLE BARU: BONUS PERCEPATAN */
+.percepatan-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+}
+.p-card {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+}
+.p-card h4 { font-size: 0.8rem; margin-bottom: 5px; }
+.p-card .price { color: #00ff88; font-weight: bold; font-size: 0.9rem; }
+.p-card .time { font-size: 0.7rem; opacity: 0.6; }
+.gold { border-color: #ffd700 !important; }
+.silver { border-color: #c0c0c0 !important; }
+.bronze { border-color: #cd7f32 !important; }
+
 </style>
 </head>
 
@@ -188,6 +211,13 @@ display:block;
 </section>
 
 <section class="section">
+<p>
+✔️ Referral pakai kode kamu → <b>Rp5.000 / orang</b><br>
+✔️ Referral menang hadiah utama → <b>kamu dapat Rp200.000</b>
+</p>
+</section>
+
+<section class="section">
     <p style="font-weight:600; color:#00ff88; letter-spacing:1px; margin-bottom:10px;">🚀 BONUS PERCEPATAN BATCH 🚀</p>
     <p style="font-size:0.85rem; opacity:0.8; margin-bottom:15px;">Semakin cepat Batch penuh, semakin besar Hadiah Tambahannya!</p>
     
@@ -210,14 +240,6 @@ display:block;
     </div>
 </section>
 
-<section class="section">
-<p>
-✔️ Referral pakai kode kamu → <b>Rp5.000 / orang</b><br>
-✔️ Referral menang hadiah utama → <b>kamu dapat Rp200.000</b>
-</p>
-</section>
-
-<!-- KATEGORI PRODUK -->
 <section class="section">
 <p style="font-weight:600;margin-bottom:14px">
 📂 PRODUK DIGITAL DIGIPRIZE 📂
@@ -252,7 +274,6 @@ Semua produk tetap mendapatkan kupon undian & cashback referral.
 
 <footer>© 2026 DigiPrize</footer>
 
-<!-- POPUP PRODUK -->
 <div id="popupProduk">
 <div class="box">
 <h3 id="produkTitle"></h3>
@@ -266,7 +287,6 @@ Tutup
 </div>
 </div>
 
-<!-- POPUP BATCH -->
 <div id="popupBatch">
 <div class="box">
 <h3>⚠️ BATCH HAMPIR BERAKHIR</h3>
