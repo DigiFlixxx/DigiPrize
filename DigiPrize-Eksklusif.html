@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiPrize Eksklusif – Produk Digital & Mega Reward</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Poppins,sans-serif;
+background:#0a0a0a;
+color:#fff;
+line-height:1.6
+}
+.container{max-width:900px;margin:auto;padding:20px}
+
+/* GOLD THEME ACCENT */
+:root {
+    --gold: #d4af37;
+    --dark-gold: #aa841e;
+    --real-gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa841e);
+}
+
+/* HERO */
+.hero{
+background:linear-gradient(135deg,#111,#1b1b1b);
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+margin-bottom:40px;
+border: 1px solid #333;
+position: relative;
+overflow: hidden;
+}
+.hero::before {
+    content: "EXCLUSIVE";
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background: var(--real-gold);
+    color: #000;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+.hero h1{font-size:1.8rem;margin-bottom:12px; background: var(--real-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.hero p{opacity:.9;margin-bottom:18px}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+padding:14px 34px;
+border-radius:50px;
+background: var(--real-gold);
+color: #000;
+font-weight:700;
+text-decoration:none;
+box-shadow: 0 4px 15px rgba(179, 135, 40, 0.4);
+transition: .3s;
+}
+.btn:hover { transform: scale(1.05); }
+
+/* SECTION */
+.section{
+background:#141414;
+border-radius:14px;
+padding:25px;
+text-align:center;
+margin:30px 0;
+border:1px solid #333
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px
+}
+.card{
+background:#111;
+padding:20px;
+border-radius:14px;
+border:1px solid #222;
+cursor:pointer;
+transition:.3s
+}
+.card:hover{
+transform:translateY(-5px);
+border:1px solid var(--gold)
+}
+.card h3{margin-bottom:8px; color: var(--gold);}
+
+/* STICKY */
+.sticky{
+position:fixed;
+bottom:0;left:0;right:0;
+display:flex;
+z-index:999
+}
+.sticky a{
+flex:1;
+padding:16px;
+text-align:center;
+font-weight:700;
+text-decoration:none
+}
+.order{background: var(--real-gold); color:#000}
+.wa{background:#111;color: var(--gold); border-top: 1px solid #333;}
+
+/* FOOTER */
+footer{
+padding:80px 20px 110px;
+text-align:center;
+opacity:.6;
+font-size:.85rem
+}
+
+/* POPUP */
+#popupBatch,#popupProduk{
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:rgba(0,0,0,.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999
+}
+.box{
+background:#0a0a0a;
+padding:30px;
+border-radius:18px;
+width:95%;
+max-width:650px;
+max-height:80%;
+overflow-y:auto;
+border:1px solid var(--gold);
+animation:fadeUp .3s ease;
+text-align:center
+}
+.box h3{color: var(--gold); margin-bottom:15px}
+.box ul{padding-left:18px;text-align:left}
+.box li{margin-bottom:8px;font-size:.9rem; color: #ddd; list-style: none;}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* FAKE NOTIF */
+#notif{
+position:fixed;
+bottom:95px;
+left:20px;
+background:#111;
+border:1px solid var(--gold);
+border-radius:12px;
+padding:12px 16px;
+font-size:.85rem;
+display:none;
+z-index:9998
+}
+#notif span{color: var(--gold); font-weight:600}
+
+.hero img{
+width:100%;
+max-width:450px;
+height:auto;
+margin:20px auto;
+display:block;
+border-radius: 10px;
+}
+
+.highlight-box {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px dashed var(--gold);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<section class="hero">
+<h1>👑 DigiPrize Eksklusif: 5 Produk Digital + Mega Reward!</h1>
+
+<img src="prize-Eksklusif.png" alt="Mega Prize DigiPrize">
+
+<div class="highlight-box">
+    <p>🔥 <b>MEGA REWARD BATCH INI:</b> 🔥</p>
+    <p>
+    🏆 <b>1 Unit iPhone 16</b> (Pemenang Utama)<br>
+    📱 <b>1 Unit Smartphone</b> (Pemenang Utama ke-2)<br>
+    ✨ <b>30 Hadiah Hiburan</b> (TWS/Speaker/Power Bank)<br>
+    🚀 <b>50-100 Hadiah Bonus Percepatan</b> (Jika Batch penuh cepat!)
+    </p>
+</div>
+
+<p style="font-size:.85rem;opacity:.8">
+🛡️ Setiap pembelian sudah termasuk <b>Akses Langsung ke 5 Produk Digital</b> pilihan & 1 Nomor Kupon Eksklusif.
+</p>
+
+<a href="https://lynk.id/ncv699/qem15mexy2ep" class="btn">AMBIL PAKET EKSKLUSIF</a>
+</section>
+
+<section class="grid">
+<div class="card">
+    <h3>📦 5-in-1 Produk</h3>
+    <p>Beli 1 paket, langsung dapat 5 produk digital premium.</p>
+</div>
+<div class="card">
+    <h3>⚡ Rasio Menang Tinggi</h3>
+    <p>Ratusan total pemenang jika batch penuh dalam 24 jam!</p>
+</div>
+<div class="card">
+    <h3>🤝 Referral Sultan</h3>
+    <p>Komisi <b>Rp12.000</b> & Bonus <b>Smartphone</b> jika temanmu menang Hadiah Utama 1!</p>
+</div>
+</section>
+
+<section class="section" style="border: 1px solid var(--gold);">
+    <h3 style="color: var(--gold); margin-bottom: 10px;">PROGRAM REFERRAL EKSKLUSIF</h3>
+    <p>
+    💸 Komisi Langsung: <b>Rp12.000 / penjualan</b><br>
+    🎁 <b>Bonus Referral:</b> Jika referral kamu menang Hadiah Utama 1, <br> <span style="color:var(--gold); font-weight:bold;">KAMU DAPAT 1 UNIT SMARTPHONE GRATIS!</span>
+    </p>
+</section>
+
+<section class="section" style="background: linear-gradient(180deg, #1a1a1a 0%, #111 100%); border: 2px solid var(--gold); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--real-gold);"></div>
+    <h3 style="color: var(--gold); margin-bottom: 15px; font-size: 1.5rem;">🚀 BONUS PERCEPATAN BATCH</h3>
+    <p style="font-size: 0.9rem; margin-bottom: 20px; opacity: 0.9;">Semakin cepat Batch penuh, semakin banyak orang yang <b>PASTI MENANG</b> hadiah hiburan tambahan!</p>
+    
+    <div style="display: flex; flex-direction: column; gap: 10px; text-align: left; max-width: 500px; margin: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(212, 175, 55, 0.2); border-radius: 10px; border-left: 5px solid #00ff88;">
+            <span>⚡ Full Batch dalam <b>1 Hari</b></span>
+            <b style="color: #00ff88;">+100 Pemenang</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 5px solid var(--gold);">
+            <span>⏰ Full Batch dalam <b>4 Hari</b></span>
+            <b style="color: var(--gold);">+45 Pemenang</b>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 5px solid #aaa;">
+            <span>📅 Full Batch dalam <b>7 Hari</b></span>
+            <b style="color: #ccc;">+20 Pemenang</b>
+        </div>
+    </div>
+    
+    <p style="margin-top: 15px; font-size: 0.8rem; font-style: italic; color: #aaa;">
+        *Hadiah bonus berupa TWS/Speaker Bluetooth/Powerbank.
+    </p>
+</section>
+
+<section class="section">
+<p style="font-weight:600;margin-bottom:14px; color: var(--gold);">
+📂 PILIH 5 PRODUK DIGITAL KAMU 📂
+</p>
+
+<div class="grid">
+<div class="card" onclick="openProduk('ebook')">💰 <b>Ebook Cuanable</b></div>
+<div class="card" onclick="openProduk('video')">🚀 <b>Video Factory</b></div>
+<div class="card" onclick="openProduk('ai')">🤖 <b>AI Money Tools</b></div>
+<div class="card" onclick="openProduk('trading')">📊 <b>Profit Lab</b></div>
+<div class="card" onclick="openProduk('creator')">🎨 <b>Design Hub</b></div>
+<div class="card" onclick="openProduk('entertainment')">🎬 <b>Premium Vault</b></div>
+</div>
+
+<p style="margin-top:20px;font-size:.85rem;opacity:.8">
+*Setelah order, Anda akan diberi link untuk memilih Produk Digital Premium.
+</p>
+</section>
+
+<section class="hero" style="border: 2px solid var(--gold);">
+<h2>Eksklusif Terbatas</h2>
+<p>Dapatkan 5 produknya, raih peluang iPhone-nya sekarang!</p>
+<a href="https://lynk.id/ncv699/qem15mexy2ep" class="btn">ORDER SEKARANG</a>
+</section>
+
+</div>
+
+<div class="sticky">
+<a href="https://lynk.id/ncv699/qem15mexy2ep" class="order">ORDER SEKARANG</a>
+<a href="https://wa.me/6283142225207?text=Halo%20Admin,%20saya%20ingin%20tanya%20paket%20Eksklusif%20DigiPrize" class="wa">KONSULTASI WA</a>
+</div>
+
+<footer>© 2026 DigiPrize Exclusive Edition</footer>
+
+<div id="popupProduk">
+<div class="box">
+<h3 id="produkTitle"></h3>
+<ul id="produkList"></ul>
+<a href="https://lynk.id/ncv699/qem15mexy2ep" class="btn" style="display:block;margin-top:20px">ORDER PAKET INI</a>
+<button onclick="closeProduk()" style="background:none;border:none;color:#aaa;font-size:.8rem;margin-top:15px;cursor:pointer">Tutup</button>
+</div>
+</div>
+
+<div id="popupBatch">
+<div class="box" style="border-width: 3px;">
+<h3>⚠️ PERINGATAN BATCH EKSKLUSIF</h3>
+<p style="margin-bottom:20px">
+Kesempatan terbatas, Order Sekarang, <b> Dapat Bonus 100 Hadiah Tambahan</b>. Amankan Kupon Anda sekarang!
+</p>
+<a href="https://lynk.id/ncv699/qem15mexy2ep" class="btn" style="display:block;margin-bottom:10px">SAYA MAU JOIN</a>
+<button onclick="closeBatch()" style="background:none;border:none;color:#aaa;font-size:.8rem;cursor:pointer">Nanti saja</button>
+</div>
+</div>
+
+<div id="notif">
+<span id="notifName">Andi</span> – <span id="notifPhone">0812*****092</span><br>
+baru saja ambil Paket Eksklusif! 🎉
+</div>
+
+<script>
+const produkData = {
+    ebook:{
+        title:"EBOOK & ECOURSE CUANABLE",
+        items:[
+            "Ebook 100 Juta Pertama dari Toko Online",
+            "Ebook 125 Contekan Iklan Tinggal Copy Paste",
+            "Ebook Modal AI dapat Cuan",
+            "Ebook 200 Prompt AI Kucing",
+            "Ebook 1000$ Per Bulan",
+            "Ebook Dropship Mastery",
+            "Ebook Technical Analysis For Mega Profit",
+            "Ebook Tutorial Shorts Siap Monet",
+            "Ebook Tutorial Banjir Orderan dari Etsy",
+            "Ebook Panduan Praktis Membuat Cerita Fiksi",
+            "Ecourse Dewa Selling",
+            "Ecourse Dropship Facebook",
+            "Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+            "Ecourse Materi Komunitas Kreator",
+            "E-Course Digital Ads Mastery",
+            "Ecourse Youtube Alur Cerita Film"
+        ]
+    },
+    video:{
+        title:"VIDEO VIRAL FACTORY",
+        items:[
+            "Video Konten Lucu - Hiburan - No Watermark",
+            "Video Konten Kucing - No Watermark",
+            "3600+ Video Review Produk Unik",
+            "6.000++ Video Shopee Affiliate & Link",
+            "1500+ Video Konten Tools Tips Peralatan",
+            "1000+ Video Konten Mainan Anak Anak",
+            "1500+ Video Konten Mobil Mewah Sport",
+            "1500+ Video Konten Gagal Lucu",
+            "1000+ Video Konten Alam Pemandangan",
+            "7500 Video Konten Video Viral",
+            "4500++ Video Sale Sosmed Tinggal Upload",
+            "1000+ Video Kuliner Unik India",
+            "5000+ Video Konten Lucu Kocak",
+            "1000++ Cuplikan Film Siap Upload",
+            "1000+ Video Stock Footage Landscape Angker",
+            "1000+ Video Stock Footage Landscape Hantu",
+            "Video Konten Sepak Bola",
+            "Video Konten Wisata Travel Swiss",
+            "Video Konten Story Whatsapp",
+            "Video Konten Militer",
+            "Video Konten Tutorial Desain",
+            "Video Konten Desain Rumah Modern",
+            "Video Konten Motivasi",
+            "Video Konten Wisata",
+            "Video Konten Masakan",
+            "Video Konten Barang Unik Cina",
+            "Video Konten Mukbang",
+            "Video Konten Mainan Anak",
+            "Video Konten Mancing Mania",
+            "Video Konten Film Part",
+            "Video Konten Game Mobile Legend",
+            "Video Konten Craft",
+            "Video Konten Islam",
+            "Video Konten Film Kartun",
+            "Video Konten Review Makeup",
+            "Video Konten Lucu Part 2",
+            "Video Konten Kucing Part 2",
+            "Video Konten Cuplikan Film Korea",
+            "Video Konten Baper",
+            "Paket 35.000++ Video Konten No Watermark"
+        ]
+    },
+    ai:{
+        title:"AI & AUTO MONEY TOOLS",
+        items:[
+            "Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+            "Bot AI Chat-GPT PRIMESWING 1 Jam",
+            "Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+            "Tool Generator Prompt Voxel Forest Lab",
+            "Tool Prompt Alam Penenang Pikiran Gelisah"
+        ]
+    },
+    trading:{
+        title:"TRADING & PROFIT LAB",
+        items:[
+            "Bot Forex Gold Catcher V3",
+            "Indicator MT4 Pattern Candlestick",
+            "Indicator MT4 Short Trading",
+            "Indicator MT4 Spider Strategy"
+        ]
+    },
+    creator:{
+        title:"CREATOR & DESIGN HUB",
+        items:[
+            "Template PPT Pendidikan Guru Kreatif",
+            "Template PPT Presentation Maniac",
+            "Gudang Template Power Point V.02",
+            "Template IG Feed dan Story",
+            "Template Tema Blogger Blogspot",
+            "Premium Elementor Template",
+            "Toko Whatsapp Blogspot"
+        ]
+    },
+    entertainment:{
+        title:"ENTERTAINMENT VAULT",
+        items:[
+            "150 Game PC Dari Gamehouse",
+            "FM 2024 Update Liga Indonesia 2026"
+        ]
+    }
+};
+
+function openProduk(k){
+    document.getElementById("popupProduk").style.display="flex";
+    document.getElementById("produkTitle").innerText=produkData[k].title;
+    let list="";
+    produkData[k].items.forEach(i=>{list+=`<li>• ${i}</li>`});
+    document.getElementById("produkList").innerHTML=list;
+}
+function closeProduk(){document.getElementById("popupProduk").style.display="none"}
+setTimeout(()=>{document.getElementById("popupBatch").style.display="flex"},15000);
+
+const names=["Rizky","Sultan","Dewi","Budi","Ayu","Fajar","Rina","Hendra","Putra"];
+function randomPhone(){
+    const start=["0812","0813","0852","0877","0896"];
+    return start[Math.floor(Math.random()*start.length)]+"*****"+Math.floor(100+Math.random()*900);
+}
+function showNotif(){
+    document.getElementById("notifName").innerText=names[Math.floor(Math.random()*names.length)];
+    document.getElementById("notifPhone").innerText=randomPhone();
+    const notif=document.getElementById("notif");
+    notif.style.display="block";
+    setTimeout(()=>{notif.style.display="none"},4000);
+}
+setInterval(showNotif,18000);
+function closeBatch(){document.getElementById("popupBatch").style.display="none"}
+</script>
+
+</body>
+</html>
