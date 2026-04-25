@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiPrize Basic Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #111827; color: #ffffff; }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 6px;
+        }
+
+        .stat-mini-card {
+            background: #1f2937;
+            border: 1px solid #374151;
+            padding: 10px 4px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 65px;
+        }
+
+        .label-stats {
+            font-size: 7px;
+            line-height: 1.2;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 4px;
+            opacity: 0.8;
+        }
+
+        @media (min-width: 768px) {
+            .label-stats { font-size: 10px; }
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background-color: #1f2937;
+            min-width: 180px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 50;
+            border-radius: 12px;
+            border: 1px solid #374151;
+            overflow: hidden;
+        }
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .dropdown-content a:hover { background-color: #374151; }
+        .show { display: block; }
+    </style>
+</head>
+<body class="p-3 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl font-black tracking-tight text-white italic">DigiPrize <span class="font-light opacity-70">Basic</span></h1>
+            
+            <div class="relative">
+                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition">
+                    <i class="fas fa-ellipsis-v text-white"></i>
+                </button>
+                <div id="myDropdown" class="dropdown-content">
+                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Menu"><i class="fas fa-home mr-2"></i> Menu</a>
+                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Basic"><i class="fas fa-certificate mr-2"></i> DigiPrize Basic</a>
+                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Eksklusif"><i class="fas fa-crown mr-2 text-yellow-500"></i> DigiPrize Eksklusif</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4 flex justify-end">
+             <div class="text-[9px] font-bold bg-gray-800 border border-gray-700 px-3 py-1 rounded-full text-white">
+                BATCH BERJALAN: <span id="batchNum">--</span>
+            </div>
+        </div>
+
+        <div class="stats-container mb-6">
+            <div class="stat-mini-card">
+                <span class="label-stats">Total Terjual</span>
+                <span class="text-xs md:text-xl font-black text-white" id="statTerjual">0</span>
+            </div>
+            <div class="stat-mini-card">
+                <span class="label-stats">Sisa Kuota / Batch</span>
+                <span class="text-xs md:text-xl font-black text-white" id="statSisa">0</span>
+            </div>
+            <div class="stat-mini-card">
+                <span class="label-stats">Dana Keluar Ref</span>
+                <span class="text-[10px] md:text-xl font-black text-white" id="statDana">Rp 0</span>
+            </div>
+            <div class="stat-mini-card">
+                <span class="label-stats">Ref Terpopuler</span>
+                <span class="text-[10px] md:text-xl font-black text-white truncate w-full px-1" id="statTopRef">-</span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 shadow-xl">
+                    <h4 class="font-bold mb-4 text-xs border-b border-gray-700 pb-2 uppercase tracking-widest text-white opacity-70 italic">Informasi Sistem</h4>
+                    <ul class="text-[11px] space-y-3 text-white">
+                        <li class="flex justify-between"><span>Max per Batch:</span> <b>250 Pembeli</b></li>
+                        <li class="flex justify-between"><span>Komisi per Ref:</span> <b class="font-black text-white">Rp 5.000</b></li>
+                        <li class="flex justify-between"><span>Cashback:</span> <b>Ke-100 & 200</b></li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden shadow-xl">
+                    <div class="p-4 border-b border-gray-700 flex justify-between items-center">
+                        <h3 class="font-bold text-[10px] uppercase tracking-widest text-white opacity-70">Transaksi Terbaru</h3>
+                        <button onclick="updateData()" class="text-white hover:opacity-50 transition">
+                            <i class="fas fa-sync-alt text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead class="bg-gray-900 text-white text-[9px] uppercase font-bold opacity-60">
+                                <tr>
+                                    <th class="px-4 py-3">Pembeli</th>
+                                    <th class="px-4 py-3 text-center">Ref Digunakan</th>
+                                    <th class="px-4 py-3 text-right">No Kupon</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody" class="text-xs divide-y divide-gray-700"></tbody>
+                        </table>
+                    </div>
+                    <div class="p-3 bg-gray-800 border-t border-gray-700 flex justify-between items-center text-[10px]">
+                        <button onclick="changePage('sales', -1)" id="btnPrevSales" class="bg-gray-700 px-3 py-1 rounded-lg font-bold disabled:opacity-20 text-white">PREV</button>
+                        <span id="pageSales" class="font-black text-white uppercase">Page 1</span>
+                        <button onclick="changePage('sales', 1)" id="btnNextSales" class="bg-gray-700 px-3 py-1 rounded-lg font-bold disabled:opacity-20 text-white">NEXT</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-gray-800 p-5 rounded-2xl border border-yellow-600/50 shadow-xl">
+                    <h4 class="font-bold mb-4 text-xs border-b border-gray-700 pb-2 uppercase tracking-widest text-white opacity-70 italic">Pemenang <span class="text-yellow-500">Cashback</span></h4>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-gray-700/50 pb-2">
+                            <div>
+                                <p class="text-[9px] text-yellow-500 font-bold uppercase">Kupon Ke-100</p>
+                                <p id="winner100Name" class="text-xs font-bold text-white">Menunggu...</p>
+                            </div>
+                            <div class="bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">
+                                <p id="winner100Ticket" class="text-xs font-black text-yellow-500">#---</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-[9px] text-yellow-500 font-bold uppercase">Kupon Ke-200</p>
+                                <p id="winner200Name" class="text-xs font-bold text-white">Menunggu...</p>
+                            </div>
+                            <div class="bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">
+                                <p id="winner200Ticket" class="text-xs font-black text-yellow-500">#---</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden shadow-xl">
+                    <div class="p-3 border-b border-gray-700 bg-gray-900">
+                        <h4 class="font-bold text-[10px] uppercase tracking-widest text-white opacity-70 text-center italic">Ranking Referral</h4>
+                    </div>
+                    <table class="w-full text-left text-[11px]">
+                        <tbody id="leaderboardBody" class="divide-y divide-gray-700"></tbody>
+                    </table>
+                    <div class="p-3 bg-white/5 border-t border-gray-700 flex justify-between items-center text-[10px]">
+                        <button onclick="changePage('ref', -1)" id="btnPrevRef" class="bg-gray-700 px-2 py-1 rounded-lg font-bold disabled:opacity-20 text-white">PREV</button>
+                        <span id="pageRef" class="font-black text-white uppercase">Page 1</span>
+                        <button onclick="changePage('ref', 1)" id="btnNextRef" class="bg-gray-700 px-2 py-1 rounded-lg font-bold disabled:opacity-20 text-white">NEXT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- KONFIGURASI URL ---
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw1zbAZKJs2VyQkAQmlJZXc7qA-1APHcZ3N13xvo2wyE29CHBjnp4SKIX4smgAhviCbMw/exec";
+
+        function toggleMenu() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.fa-ellipsis-v') && !event.target.matches('button')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        let allData = { recentSales: [], leaderboard: [] };
+        let currentPage = { sales: 1, ref: 1 };
+        const itemsPerPage = 15;
+
+        function updateData() {
+            fetch(SCRIPT_URL)
+                .then(response => response.json())
+                .then(data => {
+                    allData = data;
+                    document.getElementById('batchNum').innerText = data.currentBatch;
+                    document.getElementById('statTerjual').innerText = data.terjual;
+                    document.getElementById('statSisa').innerText = data.sisaBatch;
+                    document.getElementById('statDana').innerText = "Rp " + data.danaRef.toLocaleString('id-ID');
+                    document.getElementById('statTopRef').innerText = data.topRef;
+
+                    const win100 = data.recentSales.find(s => s.kupon.toString().endsWith("100"));
+                    const win200 = data.recentSales.find(s => s.kupon.toString().endsWith("200"));
+
+                    if(win100) {
+                        document.getElementById('winner100Name').innerText = win100.nama;
+                        document.getElementById('winner100Ticket').innerText = "#" + win100.kupon;
+                    }
+                    if(win200) {
+                        document.getElementById('winner200Name').innerText = win200.nama;
+                        document.getElementById('winner200Ticket').innerText = "#" + win200.kupon;
+                    }
+
+                    renderTables();
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function renderTables() {
+            let startS = (currentPage.sales - 1) * itemsPerPage;
+            let paginatedSales = allData.recentSales.slice(startS, startS + itemsPerPage);
+            let htmlSales = "";
+            paginatedSales.forEach(row => {
+                htmlSales += `<tr class="hover:bg-gray-700 transition">
+                    <td class="px-4 py-3 font-semibold text-white truncate max-w-[80px]">${row.nama}</td>
+                    <td class="px-4 py-3 text-white font-mono text-[10px] text-center">${row.ref}</td>
+                    <td class="px-4 py-3 text-white font-black text-right">${row.kupon}</td>
+                </tr>`;
+            });
+            document.getElementById('tableBody').innerHTML = htmlSales || '<tr><td colspan="3" class="p-4 text-center">No Data</td></tr>';
+            
+            let startR = (currentPage.ref - 1) * itemsPerPage;
+            let paginatedRef = allData.leaderboard.slice(startR, startR + itemsPerPage);
+            let htmlRef = "";
+            paginatedRef.forEach((item, index) => {
+                let actualIndex = startR + index;
+                let rank = actualIndex === 0 ? "🥇" : actualIndex === 1 ? "🥈" : actualIndex === 2 ? "🥉" : (actualIndex + 1);
+                htmlRef += `<tr class="hover:bg-gray-700 transition">
+                    <td class="px-4 py-2 text-white">${rank} ${item.kode}</td>
+                    <td class="px-4 py-2 text-right font-black text-white">${item.jumlah}x</td>
+                </tr>`;
+            });
+            document.getElementById('leaderboardBody').innerHTML = htmlRef || '<tr><td class="p-4 text-center">No Data</td></tr>';
+
+            document.getElementById('btnPrevSales').disabled = currentPage.sales === 1;
+            document.getElementById('btnNextSales').disabled = startS + itemsPerPage >= allData.recentSales.length;
+            document.getElementById('btnPrevRef').disabled = currentPage.ref === 1;
+            document.getElementById('btnNextRef').disabled = startR + itemsPerPage >= allData.leaderboard.length;
+            
+            document.getElementById('pageSales').innerText = `Page ${currentPage.sales}`;
+            document.getElementById('pageRef').innerText = `Page ${currentPage.ref}`;
+        }
+
+        function changePage(type, direction) {
+            currentPage[type] += direction;
+            renderTables();
+        }
+
+        window.onload = updateData;
+    </script>
+</body>
+</html>
