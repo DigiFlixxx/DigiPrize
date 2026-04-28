@@ -1,249 +1,455 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DigiPrize Eksklusif Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { background-color: #111827; color: #ffffff; }
-        
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr)); /* Ubah jadi 3 kolom karena dana dihapus */
-            gap: 8px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiPrize Eksklusif – Produk Digital & Mega Reward</title>
 
-        .stat-mini-card {
-            background: #1f2937;
-            border: 1px solid #374151;
-            padding: 12px 4px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 70px;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
-        .label-stats {
-            font-size: 8px;
-            line-height: 1.2;
-            text-transform: uppercase;
-            font-weight: 800;
-            color: #9ca3af;
-            margin-bottom: 4px;
-        }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Poppins,sans-serif;
+background:#0a0a0a;
+color:#fff;
+line-height:1.6
+}
+.container{max-width:900px;margin:auto;padding:20px}
 
-        @media (min-width: 768px) {
-            .label-stats { font-size: 10px; }
-        }
+/* GOLD THEME ACCENT */
+:root {
+    --gold: #d4af37;
+    --dark-gold: #aa841e;
+    --real-gold: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa841e);
+}
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 40px;
-            background-color: #1f2937;
-            min-width: 180px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 50;
-            border-radius: 12px;
-            border: 1px solid #374151;
-            overflow: hidden;
-        }
-        .dropdown-content a {
-            color: #ffffff;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 13px;
-            transition: background 0.2s;
-        }
-        .dropdown-content a:hover { background-color: #374151; }
-        .show { display: block; }
-    </style>
+/* HERO */
+.hero{
+background:linear-gradient(135deg,#111,#1b1b1b);
+padding:50px 20px;
+border-radius:18px;
+text-align:center;
+margin-bottom:40px;
+border: 1px solid #333;
+position: relative;
+overflow: hidden;
+}
+.hero::before {
+    content: "EXCLUSIVE";
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background: var(--real-gold);
+    color: #000;
+    padding: 5px 40px;
+    transform: rotate(45deg);
+    font-size: 0.7rem;
+    font-weight: 800;
+}
+.hero h1{font-size:1.8rem;margin-bottom:12px; background: var(--real-gold); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+.hero p{opacity:.9;margin-bottom:18px}
+
+/* BUTTON */
+.btn{
+display:inline-block;
+padding:14px 34px;
+border-radius:50px;
+background: var(--real-gold);
+color: #000;
+font-weight:700;
+text-decoration:none;
+box-shadow: 0 4px 15px rgba(179, 135, 40, 0.4);
+transition: .3s;
+}
+.btn:hover { transform: scale(1.05); }
+
+/* SECTION */
+.section{
+background:#141414;
+border-radius:14px;
+padding:25px;
+text-align:center;
+margin:30px 0;
+border:1px solid #333
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px
+}
+.card{
+background:#111;
+padding:20px;
+border-radius:14px;
+border:1px solid #222;
+cursor:pointer;
+transition:.3s
+}
+.card:hover{
+transform:translateY(-5px);
+border:1px solid var(--gold)
+}
+.card h3{margin-bottom:8px; color: var(--gold);}
+
+/* STICKY */
+.sticky{
+position:fixed;
+bottom:0;left:0;right:0;
+display:flex;
+z-index:999
+}
+.sticky a{
+flex:1;
+padding:16px;
+text-align:center;
+font-weight:700;
+text-decoration:none
+}
+.order{background: var(--real-gold); color:#000}
+.wa{background:#111;color: var(--gold); border-top: 1px solid #333;}
+
+/* FOOTER */
+footer{
+padding:80px 20px 110px;
+text-align:center;
+opacity:.6;
+font-size:.85rem
+}
+
+/* POPUP */
+#popupBatch,#popupProduk{
+position:fixed;
+top:0;left:0;right:0;bottom:0;
+background:rgba(0,0,0,.9);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:9999
+}
+.box{
+background:#0a0a0a;
+padding:30px;
+border-radius:18px;
+width:95%;
+max-width:650px;
+max-height:80%;
+overflow-y:auto;
+border:1px solid var(--gold);
+animation:fadeUp .3s ease;
+text-align:center
+}
+.box h3{color: var(--gold); margin-bottom:15px}
+.box ul{padding-left:18px;text-align:left}
+.box li{margin-bottom:8px;font-size:.9rem; color: #ddd; list-style: none;}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* FAKE NOTIF */
+#notif{
+position:fixed;
+bottom:95px;
+left:20px;
+background:#111;
+border:1px solid var(--gold);
+border-radius:12px;
+padding:12px 16px;
+font-size:.85rem;
+display:none;
+z-index:9998
+}
+#notif span{color: var(--gold); font-weight:600}
+
+.hero img{
+width:100%;
+max-width:450px;
+height:auto;
+margin:20px auto;
+display:block;
+border-radius: 10px;
+}
+
+.highlight-box {
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px dashed var(--gold);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+</style>
 </head>
-<body class="p-3 md:p-8">
 
-    <div class="max-w-6xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h1 class="text-xl font-black tracking-tight text-white italic">DigiPrize <span class="text-yellow-500">Eksklusif</span></h1>
-            
-            <div class="relative">
-                <button onclick="toggleMenu()" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-800 transition">
-                    <i class="fas fa-ellipsis-v text-white"></i>
-                </button>
-                <div id="myDropdown" class="dropdown-content">
-                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Menu"><i class="fas fa-home mr-2"></i> Menu</a>
-                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Basic"><i class="fas fa-certificate mr-2"></i> DigiPrize Basic</a>
-                    <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Eksklusif"><i class="fas fa-crown mr-2 text-yellow-500"></i> DigiPrize Eksklusif</a>
-                </div>
-            </div>
+<body>
+
+<div class="container">
+
+<section class="hero">
+<h1>👑 DigiPrize Eksklusif: 5 Produk Digital + Mega Reward!</h1>
+
+<img src="prize.png" alt="Mega Prize DigiPrize">
+
+<div class="highlight-box">
+    <p>🔥 <b>MEGA REWARD BATCH INI:</b> 🔥</p>
+    <p>
+    🏆 <b>1 Unit iPhone 16</b> (Pemenang Utama)<br>
+    📱 <b>1 Unit Smartphone</b> (Pemenang Utama ke-2)<br>
+    ✨ <b>30 Hadiah Hiburan</b> (TWS/Speaker/Power Bank)<br>
+    🚀 <b>50-100 Hadiah Bonus Percepatan</b> (Jika Batch penuh cepat!)
+    </p>
+</div>
+
+<p style="font-size:.85rem;opacity:.8">
+🛡️ Setiap pembelian sudah termasuk <b>Akses Langsung ke 5 Produk Digital</b> pilihan & 1 Nomor Kupon Eksklusif.
+</p>
+
+<a href="http://lynk.id/ncv699/2nkp74q01mj4" class="btn">AMBIL PAKET EKSKLUSIF</a>
+</section>
+
+<section class="grid">
+<div class="card">
+    <h3>📦 5-in-1 Produk</h3>
+    <p>Beli 1 paket, langsung dapat 5 produk digital premium.</p>
+</div>
+<div class="card">
+    <h3>⚡ Rasio Menang Tinggi</h3>
+    <p>Ratusan total pemenang jika batch penuh dalam 24 jam!</p>
+</div>
+<div class="card">
+    <h3>🤝 Referral Sultan</h3>
+    <p>Komisi <b>Rp12.000</b> & Bonus <b>Smartphone</b> jika temanmu menang iPhone!</p>
+</div>
+</section>
+
+<section class="section" style="border: 1px solid var(--gold);">
+    <h3 style="color: var(--gold); margin-bottom: 10px;">PROGRAM REFERRAL EKSKLUSIF</h3>
+    <p>
+    💸 Komisi Langsung: <b>Rp12.000 / penjualan</b><br>
+    🎁 <b>Bonus Referral:</b> Jika referral kamu menang iPhone 16, <br> <span style="color:var(--gold); font-weight:bold;">KAMU DAPAT 1 UNIT SMARTPHONE GRATIS!</span>
+    </p>
+</section>
+
+<section class="section" style="background: linear-gradient(180deg, #1a1a1a 0%, #111 100%); border: 2px solid var(--gold); position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: var(--real-gold);"></div>
+    <h3 style="color: var(--gold); margin-bottom: 15px; font-size: 1.5rem;">🚀 BONUS PERCEPATAN BATCH</h3>
+    <p style="font-size: 0.9rem; margin-bottom: 20px; opacity: 0.9;">Semakin cepat Batch penuh, semakin banyak orang yang <b>PASTI MENANG</b> hadiah hiburan tambahan!</p>
+    
+    <div style="display: flex; flex-direction: column; gap: 10px; text-align: left; max-width: 500px; margin: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(212, 175, 55, 0.2); border-radius: 10px; border-left: 5px solid #00ff88;">
+            <span>⚡ Full Batch dalam <b>1 Hari</b></span>
+            <b style="color: #00ff88;">+100 Pemenang</b>
         </div>
-
-        <div class="mb-4 flex justify-end">
-             <div class="text-[9px] font-bold bg-gray-800 border border-gray-700 px-3 py-1 rounded-full text-white">
-                BATCH BERJALAN: <span id="batchNum">--</span>
-            </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 5px solid var(--gold);">
+            <span>⏰ Full Batch dalam <b>4 Hari</b></span>
+            <b style="color: var(--gold);">+45 Pemenang</b>
         </div>
-
-        <div class="stats-container mb-6">
-            <div class="stat-mini-card">
-                <span class="label-stats">Total Terjual</span>
-                <span class="text-xs md:text-xl font-black text-white" id="statTerjual">0</span>
-            </div>
-            <div class="stat-mini-card">
-                <span class="label-stats">Sisa Kuota / Batch</span>
-                <span class="text-xs md:text-xl font-black text-white" id="statSisa">0</span>
-            </div>
-            <div class="stat-mini-card">
-                <span class="label-stats">Ref Terpopuler</span>
-                <span class="text-[10px] md:text-xl font-black text-yellow-500 truncate w-full px-1" id="statTopRef">-</span>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 space-y-6">
-                <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700 shadow-xl">
-                    <h4 class="font-bold mb-4 text-xs border-b border-gray-700 pb-2 uppercase tracking-widest text-white opacity-70 italic">Informasi Sistem Eksklusif</h4>
-                    <ul class="text-[11px] space-y-3 text-white">
-                        <li class="flex justify-between"><span>Max per Batch:</span> <b>500 Pembeli</b></li>
-                        <li class="flex justify-between"><span>Komisi per Ref:</span> <b class="font-black text-yellow-500">Rp 12.000</b></li>
-                    </ul>
-                </div>
-
-                <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden shadow-xl">
-                    <div class="p-4 border-b border-gray-700 flex justify-between items-center">
-                        <h3 class="font-bold text-[10px] uppercase tracking-widest text-white opacity-70">Transaksi Terbaru</h3>
-                        <button onclick="updateData()" class="text-white hover:opacity-50 transition">
-                            <i class="fas fa-sync-alt text-xs"></i>
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left">
-                            <thead class="bg-gray-900 text-white text-[9px] uppercase font-bold opacity-60">
-                                <tr>
-                                    <th class="px-4 py-3">Waktu</th>
-                                    <th class="px-4 py-3">Pembeli</th>
-                                    <th class="px-4 py-3 text-center">Ref Digunakan</th>
-                                    <th class="px-4 py-3 text-right">No Kupon</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tableBody" class="text-[10px] md:text-xs divide-y divide-gray-700"></tbody>
-                        </table>
-                    </div>
-                    <div class="p-3 bg-gray-800 border-t border-gray-700 flex justify-between items-center text-[10px]">
-                        <button onclick="changePage('sales', -1)" id="btnPrevSales" class="bg-gray-700 px-3 py-1 rounded-lg font-bold disabled:opacity-20 text-white">PREV</button>
-                        <span id="pageSales" class="font-black text-white uppercase">Page 1</span>
-                        <button onclick="changePage('sales', 1)" id="btnNextSales" class="bg-gray-700 px-3 py-1 rounded-lg font-bold disabled:opacity-20 text-white">NEXT</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-6">
-                <div class="bg-gray-800 rounded-2xl border border-gray-700 overflow-hidden shadow-xl">
-                    <div class="p-3 border-b border-gray-700 bg-gray-900">
-                        <h4 class="font-bold text-[10px] uppercase tracking-widest text-white opacity-70 text-center italic">Ranking Referral</h4>
-                    </div>
-                    <table class="w-full text-left text-[11px]">
-                        <tbody id="leaderboardBody" class="divide-y divide-gray-700"></tbody>
-                    </table>
-                    <div class="p-3 bg-white/5 border-t border-gray-700 flex justify-between items-center text-[10px]">
-                        <button onclick="changePage('ref', -1)" id="btnPrevRef" class="bg-gray-700 px-2 py-1 rounded-lg font-bold disabled:opacity-20 text-white">PREV</button>
-                        <span id="pageRef" class="font-black text-white uppercase">Page 1</span>
-                        <button onclick="changePage('ref', 1)" id="btnNextRef" class="bg-gray-700 px-2 py-1 rounded-lg font-bold disabled:opacity-20 text-white">NEXT</button>
-                    </div>
-                </div>
-            </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border-left: 5px solid #aaa;">
+            <span>📅 Full Batch dalam <b>7 Hari</b></span>
+            <b style="color: #ccc;">+20 Pemenang</b>
         </div>
     </div>
+    
+    <p style="margin-top: 15px; font-size: 0.8rem; font-style: italic; color: #aaa;">
+        *Hadiah bonus berupa TWS/Speaker/Powerbank.
+    </p>
+</section>
 
-    <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyy8orAclAigoCOCksBQglDA6IvJqxPfCAsisdynBxwlHgdwccV2SBmZO920_LitXm0cg/exec";
+<section class="section">
+<p style="font-weight:600;margin-bottom:14px; color: var(--gold);">
+📂 PILIH 5 PRODUK DIGITAL KAMU 📂
+</p>
 
-        function toggleMenu() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
+<div class="grid">
+<div class="card" onclick="openProduk('ebook')">💰 <b>Ebook Cuanable</b></div>
+<div class="card" onclick="openProduk('video')">🚀 <b>Video Factory</b></div>
+<div class="card" onclick="openProduk('ai')">🤖 <b>AI Money Tools</b></div>
+<div class="card" onclick="openProduk('trading')">📊 <b>Profit Lab</b></div>
+<div class="card" onclick="openProduk('creator')">🎨 <b>Design Hub</b></div>
+<div class="card" onclick="openProduk('entertainment')">🎬 <b>Premium Vault</b></div>
+</div>
 
-        window.onclick = function(event) {
-            if (!event.target.matches('.fa-ellipsis-v') && !event.target.matches('button')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
+<p style="margin-top:20px;font-size:.85rem;opacity:.8">
+*Setelah order, Anda akan diberi link untuk memilih Produk Digital Premium.
+</p>
+</section>
 
-        let allData = { recentSales: [], leaderboard: [] };
-        let currentPage = { sales: 1, ref: 1 };
-        const itemsPerPage = 15;
+<section class="hero" style="border: 2px solid var(--gold);">
+<h2>Eksklusif Terbatas</h2>
+<p>Dapatkan 5 produknya, raih peluang iPhone-nya sekarang!</p>
+<a href="http://lynk.id/ncv699/2nkp74q01mj4" class="btn">ORDER SEKARANG</a>
+</section>
 
-        function updateData() {
-            fetch(SCRIPT_URL)
-                .then(response => response.json())
-                .then(data => {
-                    allData = data;
-                    document.getElementById('batchNum').innerText = data.currentBatch;
-                    document.getElementById('statTerjual').innerText = data.terjual;
-                    document.getElementById('statSisa').innerText = data.sisaBatch;
-                    document.getElementById('statTopRef').innerText = data.topRef;
+</div>
 
-                    renderTables();
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        }
+<div class="sticky">
+<a href="http://lynk.id/ncv699/2nkp74q01mj4" class="order">ORDER SEKARANG</a>
+<a href="https://wa.me/6283142225207?text=Halo%20Admin,%20saya%20ingin%20tanya%20paket%20Eksklusif%20DigiPrize" class="wa">KONSULTASI WA</a>
+</div>
 
-        function renderTables() {
-            // Render Tabel Transaksi
-            let startS = (currentPage.sales - 1) * itemsPerPage;
-            let paginatedSales = allData.recentSales.slice(startS, startS + itemsPerPage);
-            let htmlSales = "";
-            paginatedSales.forEach(row => {
-                htmlSales += `<tr class="hover:bg-gray-700 transition">
-                    <td class="px-4 py-3 text-gray-400 font-mono text-[9px]">${row.waktu}</td>
-                    <td class="px-4 py-3 font-semibold text-white">${row.nama}</td>
-                    <td class="px-4 py-3 text-yellow-500 font-mono text-[10px] text-center">${row.ref}</td>
-                    <td class="px-4 py-3 text-white font-black text-right">${row.kupon}</td>
-                </tr>`;
-            });
-            document.getElementById('tableBody').innerHTML = htmlSales || '<tr><td colspan="4" class="p-4 text-center text-gray-500 italic">Belum ada data transaksi</td></tr>';
-            
-            // Render Tabel Leaderboard
-            let startR = (currentPage.ref - 1) * itemsPerPage;
-            let paginatedRef = allData.leaderboard.slice(startR, startR + itemsPerPage);
-            let htmlRef = "";
-            paginatedRef.forEach((item, index) => {
-                let actualIndex = startR + index;
-                let rank = actualIndex === 0 ? "🥇" : actualIndex === 1 ? "🥈" : actualIndex === 2 ? "🥉" : (actualIndex + 1);
-                htmlRef += `<tr class="hover:bg-gray-700 transition">
-                    <td class="px-4 py-2 text-white">${rank} ${item.kode}</td>
-                    <td class="px-4 py-2 text-right font-black text-white">${item.jumlah}x</td>
-                </tr>`;
-            });
-            document.getElementById('leaderboardBody').innerHTML = htmlRef || '<tr><td class="p-4 text-center">No Data</td></tr>';
+<footer>© 2026 DigiPrize Exclusive Edition</footer>
 
-            // Pagination Buttons
-            document.getElementById('btnPrevSales').disabled = currentPage.sales === 1;
-            document.getElementById('btnNextSales').disabled = startS + itemsPerPage >= allData.recentSales.length;
-            document.getElementById('btnPrevRef').disabled = currentPage.ref === 1;
-            document.getElementById('btnNextRef').disabled = startR + itemsPerPage >= allData.leaderboard.length;
-            
-            document.getElementById('pageSales').innerText = `Page ${currentPage.sales}`;
-            document.getElementById('pageRef').innerText = `Page ${currentPage.ref}`;
-        }
+<div id="popupProduk">
+<div class="box">
+<h3 id="produkTitle"></h3>
+<ul id="produkList"></ul>
+<a href="http://lynk.id/ncv699/2nkp74q01mj4" class="btn" style="display:block;margin-top:20px">ORDER PAKET INI</a>
+<button onclick="closeProduk()" style="background:none;border:none;color:#aaa;font-size:.8rem;margin-top:15px;cursor:pointer">Tutup</button>
+</div>
+</div>
 
-        function changePage(type, direction) {
-            currentPage[type] += direction;
-            renderTables();
-        }
+<div id="popupBatch">
+<div class="box" style="border-width: 3px;">
+<h3>⚠️ PERINGATAN BATCH EKSKLUSIF</h3>
+<p style="margin-bottom:20px">
+Kesempatan terbatas, Order Sekarang, <b> Dapat Bonus 100 Hadiah Tambahan</b>. Amankan Kupon Anda sekarang!
+</p>
+<a href="http://lynk.id/ncv699/2nkp74q01mj4" class="btn" style="display:block;margin-bottom:10px">SAYA MAU JOIN</a>
+<button onclick="closeBatch()" style="background:none;border:none;color:#aaa;font-size:.8rem;cursor:pointer">Nanti saja</button>
+</div>
+</div>
 
-        window.onload = updateData;
-    </script>
+<div id="notif">
+<span id="notifName">Andi</span> – <span id="notifPhone">0812*****092</span><br>
+baru saja ambil Paket Eksklusif! 🎉
+</div>
+
+<script>
+const produkData = {
+    ebook:{
+        title:"EBOOK & ECOURSE CUANABLE",
+        items:[
+            "Ebook 100 Juta Pertama dari Toko Online",
+            "Ebook 125 Contekan Iklan Tinggal Copy Paste",
+            "Ebook Modal AI dapat Cuan",
+            "Ebook 200 Prompt AI Kucing",
+            "Ebook 1000$ Per Bulan",
+            "Ebook Dropship Mastery",
+            "Ebook Technical Analysis For Mega Profit",
+            "Ebook Tutorial Shorts Siap Monet",
+            "Ebook Tutorial Banjir Orderan dari Etsy",
+            "Ebook Panduan Praktis Membuat Cerita Fiksi",
+            "Ecourse Dewa Selling",
+            "Ecourse Dropship Facebook",
+            "Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+            "Ecourse Materi Komunitas Kreator",
+            "E-Course Digital Ads Mastery",
+            "Ecourse Youtube Alur Cerita Film"
+        ]
+    },
+    video:{
+        title:"VIDEO VIRAL FACTORY",
+        items:[
+            "Video Konten Lucu - Hiburan - No Watermark",
+            "Video Konten Kucing - No Watermark",
+            "3600+ Video Review Produk Unik",
+            "6.000++ Video Shopee Affiliate & Link",
+            "1500+ Video Konten Tools Tips Peralatan",
+            "1000+ Video Konten Mainan Anak Anak",
+            "1500+ Video Konten Mobil Mewah Sport",
+            "1500+ Video Konten Gagal Lucu",
+            "1000+ Video Konten Alam Pemandangan",
+            "7500 Video Konten Video Viral",
+            "4500++ Video Sale Sosmed Tinggal Upload",
+            "1000+ Video Kuliner Unik India",
+            "5000+ Video Konten Lucu Kocak",
+            "1000++ Cuplikan Film Siap Upload",
+            "1000+ Video Stock Footage Landscape Angker",
+            "1000+ Video Stock Footage Landscape Hantu",
+            "Video Konten Sepak Bola",
+            "Video Konten Wisata Travel Swiss",
+            "Video Konten Story Whatsapp",
+            "Video Konten Militer",
+            "Video Konten Tutorial Desain",
+            "Video Konten Desain Rumah Modern",
+            "Video Konten Motivasi",
+            "Video Konten Wisata",
+            "Video Konten Masakan",
+            "Video Konten Barang Unik Cina",
+            "Video Konten Mukbang",
+            "Video Konten Mainan Anak",
+            "Video Konten Mancing Mania",
+            "Video Konten Film Part",
+            "Video Konten Game Mobile Legend",
+            "Video Konten Craft",
+            "Video Konten Islam",
+            "Video Konten Film Kartun",
+            "Video Konten Review Makeup",
+            "Video Konten Lucu Part 2",
+            "Video Konten Kucing Part 2",
+            "Video Konten Cuplikan Film Korea",
+            "Video Konten Baper",
+            "Paket 35.000++ Video Konten No Watermark"
+        ]
+    },
+    ai:{
+        title:"AI & AUTO MONEY TOOLS",
+        items:[
+            "Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+            "Bot AI Chat-GPT PRIMESWING 1 Jam",
+            "Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+            "Tool Generator Prompt Voxel Forest Lab",
+            "Tool Prompt Alam Penenang Pikiran Gelisah"
+        ]
+    },
+    trading:{
+        title:"TRADING & PROFIT LAB",
+        items:[
+            "Bot Forex Gold Catcher V3",
+            "Indicator MT4 Pattern Candlestick",
+            "Indicator MT4 Short Trading",
+            "Indicator MT4 Spider Strategy"
+        ]
+    },
+    creator:{
+        title:"CREATOR & DESIGN HUB",
+        items:[
+            "Template PPT Pendidikan Guru Kreatif",
+            "Template PPT Presentation Maniac",
+            "Gudang Template Power Point V.02",
+            "Template IG Feed dan Story",
+            "Template Tema Blogger Blogspot",
+            "Premium Elementor Template",
+            "Toko Whatsapp Blogspot"
+        ]
+    },
+    entertainment:{
+        title:"ENTERTAINMENT VAULT",
+        items:[
+            "150 Game PC Dari Gamehouse",
+            "FM 2024 Update Liga Indonesia 2026"
+        ]
+    }
+};
+
+function openProduk(k){
+    document.getElementById("popupProduk").style.display="flex";
+    document.getElementById("produkTitle").innerText=produkData[k].title;
+    let list="";
+    produkData[k].items.forEach(i=>{list+=`<li>• ${i}</li>`});
+    document.getElementById("produkList").innerHTML=list;
+}
+function closeProduk(){document.getElementById("popupProduk").style.display="none"}
+setTimeout(()=>{document.getElementById("popupBatch").style.display="flex"},15000);
+
+const names=["Rizky","Sultan","Dewi","Budi","Ayu","Fajar","Rina","Hendra","Putra"];
+function randomPhone(){
+    const start=["0812","0813","0852","0877","0896"];
+    return start[Math.floor(Math.random()*start.length)]+"*****"+Math.floor(100+Math.random()*900);
+}
+function showNotif(){
+    document.getElementById("notifName").innerText=names[Math.floor(Math.random()*names.length)];
+    document.getElementById("notifPhone").innerText=randomPhone();
+    const notif=document.getElementById("notif");
+    notif.style.display="block";
+    setTimeout(()=>{notif.style.display="none"},4000);
+}
+setInterval(showNotif,18000);
+function closeBatch(){document.getElementById("popupBatch").style.display="none"}
+</script>
+
 </body>
 </html>
