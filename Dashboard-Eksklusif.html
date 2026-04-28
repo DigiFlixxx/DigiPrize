@@ -11,31 +11,30 @@
         
         .stats-container {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 6px;
+            grid-template-columns: repeat(3, minmax(0, 1fr)); /* Ubah jadi 3 kolom karena dana dihapus */
+            gap: 8px;
         }
- 
+
         .stat-mini-card {
             background: #1f2937;
             border: 1px solid #374151;
-            padding: 10px 4px;
+            padding: 12px 4px;
             border-radius: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            min-height: 65px;
+            min-height: 70px;
         }
 
         .label-stats {
-            font-size: 7px;
+            font-size: 8px;
             line-height: 1.2;
             text-transform: uppercase;
             font-weight: 800;
-            color: #ffffff;
+            color: #9ca3af;
             margin-bottom: 4px;
-            opacity: 0.8;
         }
 
         @media (min-width: 768px) {
@@ -101,12 +100,8 @@
                 <span class="text-xs md:text-xl font-black text-white" id="statSisa">0</span>
             </div>
             <div class="stat-mini-card">
-                <span class="label-stats">Dana Keluar Ref</span>
-                <span class="text-[10px] md:text-xl font-black text-white" id="statDana">Rp 0</span>
-            </div>
-            <div class="stat-mini-card">
                 <span class="label-stats">Ref Terpopuler</span>
-                <span class="text-[10px] md:text-xl font-black text-white truncate w-full px-1" id="statTopRef">-</span>
+                <span class="text-[10px] md:text-xl font-black text-yellow-500 truncate w-full px-1" id="statTopRef">-</span>
             </div>
         </div>
 
@@ -131,12 +126,13 @@
                         <table class="w-full text-left">
                             <thead class="bg-gray-900 text-white text-[9px] uppercase font-bold opacity-60">
                                 <tr>
+                                    <th class="px-4 py-3">Waktu</th>
                                     <th class="px-4 py-3">Pembeli</th>
                                     <th class="px-4 py-3 text-center">Ref Digunakan</th>
                                     <th class="px-4 py-3 text-right">No Kupon</th>
                                 </tr>
                             </thead>
-                            <tbody id="tableBody" class="text-xs divide-y divide-gray-700"></tbody>
+                            <tbody id="tableBody" class="text-[10px] md:text-xs divide-y divide-gray-700"></tbody>
                         </table>
                     </div>
                     <div class="p-3 bg-gray-800 border-t border-gray-700 flex justify-between items-center text-[10px]">
@@ -166,8 +162,7 @@
     </div>
 
     <script>
-        // --- GANTI URL INI DENGAN URL SCRIPT EKSKLUSIF ---
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_GqrpODYKK1j61hahHQ-1NlGVNWImuMDv4MbVX_1aoqXnjqxTTjDpngDKORRa-GcNDQ/exec";
+        const SCRIPT_URL = "URL_APPS_SCRIPT_EKSKLUSIF_KAMU";
 
         function toggleMenu() {
             document.getElementById("myDropdown").classList.toggle("show");
@@ -196,8 +191,7 @@
                     allData = data;
                     document.getElementById('batchNum').innerText = data.currentBatch;
                     document.getElementById('statTerjual').innerText = data.terjual;
-                    document.getElementById('statSisa').innerText = (500 - data.terjual); 
-                    document.getElementById('statDana').innerText = "Rp " + (data.terjual * 12000).toLocaleString('id-ID'); 
+                    document.getElementById('statSisa').innerText = data.sisaBatch;
                     document.getElementById('statTopRef').innerText = data.topRef;
 
                     renderTables();
@@ -206,18 +200,21 @@
         }
 
         function renderTables() {
+            // Render Tabel Transaksi
             let startS = (currentPage.sales - 1) * itemsPerPage;
             let paginatedSales = allData.recentSales.slice(startS, startS + itemsPerPage);
             let htmlSales = "";
             paginatedSales.forEach(row => {
                 htmlSales += `<tr class="hover:bg-gray-700 transition">
-                    <td class="px-4 py-3 font-semibold text-white truncate max-w-[80px]">${row.nama}</td>
-                    <td class="px-4 py-3 text-white font-mono text-[10px] text-center">${row.ref}</td>
+                    <td class="px-4 py-3 text-gray-400 font-mono text-[9px]">${row.waktu}</td>
+                    <td class="px-4 py-3 font-semibold text-white">${row.nama}</td>
+                    <td class="px-4 py-3 text-yellow-500 font-mono text-[10px] text-center">${row.ref}</td>
                     <td class="px-4 py-3 text-white font-black text-right">${row.kupon}</td>
                 </tr>`;
             });
-            document.getElementById('tableBody').innerHTML = htmlSales || '<tr><td colspan="3" class="p-4 text-center">No Data</td></tr>';
+            document.getElementById('tableBody').innerHTML = htmlSales || '<tr><td colspan="4" class="p-4 text-center text-gray-500 italic">Belum ada data transaksi</td></tr>';
             
+            // Render Tabel Leaderboard
             let startR = (currentPage.ref - 1) * itemsPerPage;
             let paginatedRef = allData.leaderboard.slice(startR, startR + itemsPerPage);
             let htmlRef = "";
@@ -231,6 +228,7 @@
             });
             document.getElementById('leaderboardBody').innerHTML = htmlRef || '<tr><td class="p-4 text-center">No Data</td></tr>';
 
+            // Pagination Buttons
             document.getElementById('btnPrevSales').disabled = currentPage.sales === 1;
             document.getElementById('btnNextSales').disabled = startS + itemsPerPage >= allData.recentSales.length;
             document.getElementById('btnPrevRef').disabled = currentPage.ref === 1;
