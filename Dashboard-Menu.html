@@ -53,7 +53,7 @@
 
     <div class="max-w-4xl mx-auto">
         <div class="flex justify-between items-center mb-16">
-            <h1 class="text-2xl font-black italic tracking-tighter">
+            <h1 class="text-2xl font-black italic tracking-tighter text-white">
                 DIGIPRIZE <span class="text-blue-500">HUB</span>
             </h1>
             
@@ -79,26 +79,30 @@
                 
                 <div class="space-y-5 mb-8">
                     <div class="flex justify-between items-end">
-                        <span class="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Terjual</span>
-                        <span id="basicTerjual" class="text-3xl font-black">--</span>
+                        <span class="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Penjualan</span>
+                        <div class="text-right">
+                             <span id="basicTerjual" class="text-3xl font-black">--</span>
+                             <span class="text-xs text-gray-500">/ 250</span>
+                        </div>
                     </div>
 
-                    <div class="w-full bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
-                        <div id="basicProgress" class="bg-blue-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-[10px] font-black text-blue-400 uppercase tracking-tighter">
+                            <span>Batch Status</span>
+                            <span id="basicPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 h-2 rounded-full overflow-hidden">
+                            <div id="basicBar" class="bg-blue-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
                     </div>
 
-                    <div class="flex justify-between items-end border-b border-white/5 pb-2">
-                        <span class="text-gray-400 text-[10px] uppercase font-bold tracking-widest">Sisa Kuota</span>
-                        <span id="basicSisa" class="text-3xl font-black text-blue-500">--</span>
-                    </div>
-
-                    <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl">
+                    <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl border border-white/5">
                         <span class="text-gray-500 text-[9px] uppercase font-bold">Top Referral</span>
                         <span id="basicTopRef" class="text-xs font-black text-white">--</span>
                     </div>
                 </div>
 
-                <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Basic" class="block text-center py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-black text-xs transition-all uppercase tracking-widest">
+                <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Basic" class="block text-center py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-black text-xs transition-all uppercase tracking-widest shadow-lg shadow-blue-600/20">
                     Detail Basic
                 </a>
             </div>
@@ -111,26 +115,30 @@
                 
                 <div class="space-y-5 mb-8">
                     <div class="flex justify-between items-end">
-                        <span class="text-yellow-500/60 text-[9px] uppercase font-bold tracking-[0.2em]">Terjual</span>
-                        <span id="eksTerjual" class="text-3xl font-bold italic">--</span>
+                        <span class="text-yellow-500/60 text-[9px] uppercase font-bold tracking-[0.2em]">Penjualan</span>
+                        <div class="text-right">
+                            <span id="eksTerjual" class="text-3xl font-bold italic">--</span>
+                            <span class="text-xs text-yellow-500/40">/ 500</span>
+                        </div>
                     </div>
 
-                    <div class="w-full bg-gray-700/50 h-1.5 rounded-full overflow-hidden">
-                        <div id="eksProgress" class="bg-yellow-500 h-full transition-all duration-1000" style="width: 0%"></div>
-                    </div>
-
-                    <div class="flex justify-between items-end border-b border-white/10 pb-2">
-                        <span class="text-yellow-500/60 text-[9px] uppercase font-bold tracking-[0.2em]">Sisa Kuota</span>
-                        <span id="eksSisa" class="text-3xl font-bold italic text-yellow-500">--</span>
+                    <div class="space-y-2 font-basic">
+                        <div class="flex justify-between text-[10px] font-black text-yellow-500 uppercase tracking-widest">
+                            <span>Batch Status</span>
+                            <span id="eksPercent">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-700/50 h-2 rounded-full overflow-hidden">
+                            <div id="eksBar" class="bg-yellow-500 h-full transition-all duration-1000" style="width: 0%"></div>
+                        </div>
                     </div>
 
                     <div class="flex justify-between items-center bg-yellow-500/10 p-3 rounded-xl border border-yellow-500/20">
                         <span class="text-yellow-500/60 text-[9px] uppercase font-bold tracking-[0.1em]">Top Referral</span>
-                        <span id="eksTopRef" class="text-xs font-black text-yellow-500">--</span>
+                        <span id="eksTopRef" class="text-xs font-black text-yellow-500 font-basic">--</span>
                     </div>
                 </div>
 
-                <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Eksklusif" class="block text-center py-4 bg-gradient-to-r from-yellow-700 to-yellow-500 hover:from-yellow-600 hover:to-yellow-400 text-black rounded-xl font-black text-xs transition-all uppercase tracking-[0.2em]">
+                <a href="https://digiflixxx.github.io/DigiPrize/Dashboard-Eksklusif" class="block text-center py-4 bg-gradient-to-r from-yellow-700 to-yellow-500 hover:from-yellow-600 hover:to-yellow-400 text-black rounded-xl font-black text-xs transition-all shadow-lg shadow-yellow-600/20 uppercase tracking-[0.2em]">
                     Detail Eksklusif
                 </a>
             </div>
@@ -162,19 +170,21 @@
                 const resBasic = await fetch(URL_BASIC);
                 const dataBasic = await resBasic.json();
                 document.getElementById('basicTerjual').innerText = dataBasic.terjual;
-                document.getElementById('basicSisa').innerText = dataBasic.sisaBatch;
                 document.getElementById('basicTopRef').innerText = dataBasic.topRef;
-                let basicPercent = (dataBasic.terjual / 250) * 100;
-                document.getElementById('basicProgress').style.width = basicPercent + "%";
+                
+                let bPercent = Math.round((dataBasic.terjual / 250) * 100);
+                document.getElementById('basicBar').style.width = bPercent + "%";
+                document.getElementById('basicPercent').innerText = bPercent + "%";
 
                 // Eksklusif Sync
                 const resEks = await fetch(URL_EKSKLUSIF);
                 const dataEks = await resEks.json();
                 document.getElementById('eksTerjual').innerText = dataEks.terjual;
-                document.getElementById('eksSisa').innerText = dataEks.sisaBatch;
                 document.getElementById('eksTopRef').innerText = dataEks.topRef;
-                let eksPercent = (dataEks.terjual / 500) * 100;
-                document.getElementById('eksProgress').style.width = eksPercent + "%";
+                
+                let ePercent = Math.round((dataEks.terjual / 500) * 100);
+                document.getElementById('eksBar').style.width = ePercent + "%";
+                document.getElementById('eksPercent').innerText = ePercent + "%";
 
                 const now = new Date();
                 document.getElementById('lastSync').innerText = "Data Terkini: " + now.toLocaleTimeString();
