@@ -292,8 +292,8 @@ border-radius: 10px;
 
 <footer>© 2026 DigiPrize Exclusive Edition</footer>
 
-<div id="popupProduk">
-<div class="box">
+<div id="popupProduk" onclick="closeProdukOutside(event)">
+<div class="box" onclick="event.stopPropagation()">
 <h3 id="produkTitle"></h3>
 <ul id="produkList"></ul>
 <a href="http://lynk.id/ncv699/qem15mexy2ep" class="btn" style="display:block;margin-top:20px">ORDER PAKET INI</a>
@@ -301,15 +301,35 @@ border-radius: 10px;
 </div>
 </div>
 
-<div id="popupBatch">
-<div class="box" style="border-width: 3px;">
-<h3>⚠️ PERINGATAN BATCH EKSKLUSIF</h3>
-<p style="margin-bottom:20px">
-Kesempatan terbatas, Order Sekarang, <b> Dapat Bonus 100 Hadiah Tambahan</b>. Amankan Kupon Anda sekarang!
-</p>
-<a href="http://lynk.id/ncv699/qem15mexy2ep" class="btn" style="display:block;margin-bottom:10px">SAYA MAU JOIN</a>
-<button onclick="closeBatch()" style="background:none;border:none;color:#aaa;font-size:.8rem;cursor:pointer">Nanti saja</button>
-</div>
+<div id="popupBatch" onclick="closeBatch()">
+    <div class="box" style="border-width: 3px; max-width: 450px;" onclick="event.stopPropagation()">
+        <div style="font-size: 0.7rem; color: #000; background: var(--real-gold); display: inline-block; padding: 2px 10px; border-radius: 5px; font-weight: 700; margin-bottom: 10px;">PROMO GRAND OPENING</div>
+        
+        <h2 style="color: var(--gold); margin-bottom: 5px;">BELI 3 GRATIS 1 🎁</h2>
+        <p style="font-size: 1rem; color: #00ff88; font-weight: 700; margin-bottom: 10px;">Dapatkan Total 20 Produk Digital Premium!</p>
+        <p style="font-size: 0.85rem; margin-bottom: 15px; opacity: 0.9;">
+            Gunakan kode di bawah untuk mendapatkan 4 unit (20 Produk) dengan harga 3 unit. <br>
+            <span style="color: #ff4444; font-weight: 700;">⚠️ TERBATAS HANYA UNTUK 30 ORANG</span>
+        </p>
+
+        <div style="background: #1a1a1a; border: 1px dashed var(--gold); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            <span style="display: block; font-size: 0.7rem; color: #aaa; margin-bottom: 5px;">KLIK KODE UNTUK SALIN</span>
+            <div onclick="copyVoucher()" style="font-size: 1.5rem; font-weight: 800; color: #fff; cursor: pointer; letter-spacing: 2px;" id="voucherCode">3GRATIS1</div>
+        </div>
+
+        <div style="text-align: left; font-size: 0.8rem; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+            <b style="color: var(--gold);">Cara Klaim Promo:</b>
+            <ol style="margin-left: 15px; margin-top: 5px; line-height: 1.4;">
+                <li>Klik tombol <b>ORDER SEKARANG</b>.</li>
+                <li>Klik ikon <b>Keranjang</b> di samping tombol <i>Buy Now</i>.</li>
+                <li>Pilih <b>4 Unit Produk</b>.</li>
+                <li>Masukkan kode <b>3GRATIS1</b> dan klik <b>Buy Now</b>.</li>
+            </ol>
+        </div>
+
+        <a href="http://lynk.id/ncv699/qem15mexy2ep" class="btn" style="display:block;margin-bottom:10px">ORDER SEKARANG</a>
+        <button onclick="closeBatch()" style="background:none;border:none;color:#aaa;font-size:.8rem;cursor:pointer">Nanti saja</button>
+    </div>
 </div>
 
 <div id="notif">
@@ -349,8 +369,8 @@ const produkData = {
             "6.000++ Video Shopee Affiliate & Link",
             "1500+ Video Konten Tools Tips Peralatan",
             "1000+ Video Konten Mainan Anak Anak",
-            "1500+ Video Mobil Mewah Sport",
-            "1500+ Video Gagal Lucu",
+            "1500+ Video Konten Mobil Mewah Sport",
+            "1500+ Video Konten Gagal Lucu",
             "1000+ Video Alam Pemandangan",
             "7500 Video Konten Video Viral",
             "4500++ Video Sale Sosmed Tinggal Upload",
@@ -432,14 +452,18 @@ function openProduk(k){
     produkData[k].items.forEach(i=>{list+=`<li>• ${i}</li>`});
     document.getElementById("produkList").innerHTML=list;
 }
+
 function closeProduk(){document.getElementById("popupProduk").style.display="none"}
-setTimeout(()=>{document.getElementById("popupBatch").style.display="flex"},15000);
+function closeProdukOutside(e){if(e.target.id==="popupProduk") closeProduk();}
+
+setTimeout(()=>{document.getElementById("popupBatch").style.display="flex"},5000);
 
 const names=["Rizky","Sultan","Dewi","Budi","Ayu","Fajar","Rina","Hendra","Putra"];
 function randomPhone(){
     const start=["0812","0813","0852","0877","0896"];
     return start[Math.floor(Math.random()*start.length)]+"*****"+Math.floor(100+Math.random()*900);
 }
+
 function showNotif(){
     document.getElementById("notifName").innerText=names[Math.floor(Math.random()*names.length)];
     document.getElementById("notifPhone").innerText=randomPhone();
@@ -447,8 +471,27 @@ function showNotif(){
     notif.style.display="block";
     setTimeout(()=>{notif.style.display="none"},4000);
 }
+
 setInterval(showNotif,18000);
-function closeBatch(){document.getElementById("popupBatch").style.display="none"}
+
+function closeBatch(){
+    document.getElementById("popupBatch").style.display="none";
+}
+
+function copyVoucher() {
+    const code = document.getElementById("voucherCode").innerText;
+    navigator.clipboard.writeText(code).then(() => {
+        const vBox = document.getElementById("voucherCode");
+        const originalText = vBox.innerText;
+        vBox.innerText = "TERSALIN! ✅";
+        vBox.style.color = "#00ff88";
+        
+        setTimeout(() => {
+            vBox.innerText = originalText;
+            vBox.style.color = "#fff";
+        }, 2000);
+    });
+}
 </script>
 
 </body>
