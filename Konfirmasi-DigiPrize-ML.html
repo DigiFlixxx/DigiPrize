@@ -172,8 +172,8 @@
 </div>
 
 <script>
-// MASUKKAN URL HASIL DEPLOY APPS SCRIPT ANDA DI SINI
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxoqT3O9fea42TlISi2UTDNyEz559JXuSwlNPWFJXU1kj6Rj3miOrkcuN_SUj8fXGzUcA/exec'; 
+// GANTI DENGAN URL WEB APP DEPLOYMENT TERBARU ANDA YANG BERAKHIRAN /exec
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyzxz15hELpQQFMATJKYt-oq60k_O60yPA3cz4-Ueu_eHSx2k_IBfgjvdPgBe7jZA2q1A/exec'; 
 
 const linkProdukList = {
     "Ebook 100 Juta Pertama dari Toko Online": "https://drive.google.com/drive/folders/16WOZmhdtXlEfA2Cm7MX5_du9ZW83Qrjx?usp=sharing",
@@ -291,7 +291,6 @@ const produkList = {
     ]
 };
 
-// FORM HANYA MEMILIH 3 PRODUK DIGITAL
 function initForm() {
     const container = document.getElementById('selection-container');
     for(let i=1; i<=3; i++) {
@@ -393,11 +392,15 @@ function prosesData() {
     })
     .then(res => res.text())
     .then(result => {
-        if (result.trim().toUpperCase() === "SUCCESS") {
-            alert("✅ KONFIRMASI BERHASIL!\n\n3 Produk Digital & Tiket Undian Batch telah dikirim ke: " + gmail);
+        const resClean = result.trim();
+        if (resClean.toUpperCase() === "SUCCESS") {
+            alert("✅ KONFIRMASI BERHASIL!\n\n3 Produk Digital & Nomor Kupon Undian Batch telah dikirimkan ke Gmail: " + gmail);
             location.reload();
+        } else if (resClean.includes("<!DOCTYPE") || resClean.includes("<html") || resClean.includes("window['ppConfig']")) {
+            // Menghindari alert berisi kode HTML Google
+            throw new Error("Akses Web App ditolak. Pastikan pada Deployment Apps Script telah diatur ke 'Anyone' (Siapa saja) dan URL menggunakan akhiran /exec.");
         } else {
-            throw new Error(result);
+            throw new Error(resClean);
         }
     })
     .catch(error => {
@@ -406,6 +409,3 @@ function prosesData() {
         btn.innerText = "COBA LAGI";
     });
 }
-</script>
-</body>
-</html>
