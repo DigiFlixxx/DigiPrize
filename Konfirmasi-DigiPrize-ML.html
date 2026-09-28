@@ -172,7 +172,6 @@
 </div>
 
 <script>
-// GANTI DENGAN URL WEB APP DEPLOYMENT TERBARU ANDA YANG BERAKHIRAN /exec
 const scriptURL = 'https://script.google.com/macros/s/AKfycbyzxz15hELpQQFMATJKYt-oq60k_O60yPA3cz4-Ueu_eHSx2k_IBfgjvdPgBe7jZA2q1A/exec'; 
 
 const linkProdukList = {
@@ -394,11 +393,10 @@ function prosesData() {
     .then(result => {
         const resClean = result.trim();
         if (resClean.toUpperCase() === "SUCCESS") {
-            alert("✅ KONFIRMASI BERHASIL!\n\n3 Produk Digital & Nomor Kupon Undian Batch telah dikirimkan ke Gmail: " + gmail);
+            alert("✅ KONFIRMASI BERHASIL!\n\n3 Produk Digital & Tiket Undian Batch telah dikirim ke: " + gmail);
             location.reload();
         } else if (resClean.includes("<!DOCTYPE") || resClean.includes("<html") || resClean.includes("window['ppConfig']")) {
-            // Menghindari alert berisi kode HTML Google
-            throw new Error("Akses Web App ditolak. Pastikan pada Deployment Apps Script telah diatur ke 'Anyone' (Siapa saja) dan URL menggunakan akhiran /exec.");
+            throw new Error("Akses Web App ditolak. Pastikan Deployment Apps Script diatur ke 'Anyone' (Siapa saja) dan jalankan fungsi triggerIzin.");
         } else {
             throw new Error(resClean);
         }
@@ -409,3 +407,6 @@ function prosesData() {
         btn.innerText = "COBA LAGI";
     });
 }
+</script>
+</body>
+</html>
