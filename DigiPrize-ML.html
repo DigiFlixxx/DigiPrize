@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DigiPrize Mobile Legend – Produk Digital Premium & Mega Diamond MLBB</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Rajdhani:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* RESET & VARIABLE TEMA MOBILE LEGENDS */
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root {
+    --bg-dark: #070913;
+    --card-bg: #0f1424;
+    --card-border: #1e2942;
+    --ml-gold: #fce074;
+    --ml-gold-dark: #b88e28;
+    --gold-gradient: linear-gradient(135deg, #fff2a3, #fce074, #d49c24, #a37210);
+    --ml-blue: #00e5ff;
+    --ml-blue-glow: rgba(0, 229, 255, 0.4);
+    --ml-purple: #9d4edd;
+    --green-cash: #00ff88;
+    --text-white: #f0f4f8;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-white);
+    line-height: 1.6;
+    background-image: 
+        radial-gradient(circle at 50% 0%, rgba(157, 78, 221, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 40%, rgba(0, 229, 255, 0.1), transparent 40%);
+}
+
+.container { max-width: 900px; margin: auto; padding: 20px; }
+
+/* TYPOGRAPHY GAMER */
+h1, h2, h3, .gamer-font {
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* HERO SECTION */
+.hero {
+    background: linear-gradient(180deg, #131a2e 0%, #0a0e1a 100%);
+    padding: 40px 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 30px;
+    border: 2px solid var(--card-border);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,229,255,0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "BATCH LIMITED MLBB";
+    position: absolute;
+    top: 15px;
+    right: -35px;
+    background: var(--gold-gradient);
+    color: #000;
+    padding: 4px 40px;
+    transform: rotate(45deg);
+    font-size: 0.7rem;
+    font-weight: 800;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.hero .badge-tag {
+    display: inline-block;
+    background: rgba(0, 229, 255, 0.15);
+    border: 1px solid var(--ml-blue);
+    color: var(--ml-blue);
+    padding: 5px 15px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.hero h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    background: var(--gold-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(252, 224, 116, 0.3);
+}
+
+.hero-img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    margin: 20px auto;
+    display: block;
+    border-radius: 14px;
+    border: 2px solid var(--ml-gold-dark);
+    box-shadow: 0 0 25px rgba(212, 156, 36, 0.25);
+}
+
+/* BUTTONS */
+.btn {
+    display: inline-block;
+    padding: 16px 36px;
+    border-radius: 50px;
+    background: var(--gold-gradient);
+    color: #000;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(252, 224, 116, 0.4);
+    transition: all .3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 6px 25px rgba(252, 224, 116, 0.6);
+}
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+    background: rgba(15, 20, 36, 0.9);
+    border: 2px solid var(--ml-gold);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    text-align: left;
+    box-shadow: 0 0 15px rgba(252, 224, 116, 0.15);
+}
+
+.highlight-box h3 {
+    color: var(--ml-gold);
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+.prize-list {
+    list-style: none;
+    padding: 0;
+}
+
+.prize-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.1);
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.prize-list li:last-child { border-bottom: none; }
+
+.note-box {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(0, 229, 255, 0.08);
+    border: 1px solid var(--ml-blue);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    color: var(--ml-blue);
+    text-align: center;
+}
+
+/* GRID & CARDS */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 25px 0;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 22px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    transition: .3s;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--ml-blue);
+    box-shadow: 0 5px 20px var(--ml-blue-glow);
+}
+
+.card h3 { color: var(--ml-gold); margin-bottom: 10px; font-size: 1.2rem; }
+.card p { font-size: 0.88rem; opacity: 0.9; }
+
+/* SECTIONS */
+.section {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 30px 0;
+    border: 1px solid var(--card-border);
+}
+
+.section-title {
+    text-align: center;
+    color: var(--ml-gold);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+/* SPEED CASHBACK BOX */
+.speed-container {
+    background: linear-gradient(180deg, rgba(0, 255, 136, 0.05) 0%, rgba(15, 20, 36, 0.9) 100%);
+    border: 2px solid var(--green-cash);
+    border-radius: 16px;
+    padding: 25px;
+    margin: 30px 0;
+}
+
+.speed-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid var(--green-cash);
+}
+
+/* PRODUCT SELECTION CARD */
+.prod-card {
+    background: #13192b;
+    border: 1px solid #253354;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.prod-card:hover {
+    border-color: var(--ml-gold);
+    background: #18223d;
+    transform: scale(1.02);
+}
+
+/* USER JOURNEY / STEPS */
+.step-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.step-card {
+    background: #121829;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #222d47;
+    text-align: center;
+}
+
+.step-num {
+    width: 30px;
+    height: 30px;
+    background: var(--gold-gradient);
+    color: #000;
+    border-radius: 50%;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+}
+
+/* STICKY FOOTER BAR */
+.sticky {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    z-index: 999;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+}
+
+.sticky a {
+    flex: 1;
+    padding: 16px;
+    text-align: center;
+    font-weight: 700;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+}
+
+.order-btn { background: var(--gold-gradient); color: #000; }
+.wa-btn { background: #0e1424; color: var(--ml-blue); border-top: 2px solid var(--ml-blue); }
+
+footer {
+    padding: 40px 20px 100px;
+    text-align: center;
+    opacity: 0.6;
+    font-size: 0.85rem;
+}
+
+/* POPUP MODAL */
+#popupProduk {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.box {
+    background: #0f1526;
+    padding: 25px;
+    border-radius: 18px;
+    width: 92%;
+    max-width: 550px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border: 2px solid var(--ml-gold);
+    text-align: center;
+    box-shadow: 0 0 30px rgba(252, 224, 116, 0.3);
+}
+
+.box h3 { color: var(--ml-gold); margin-bottom: 15px; }
+.box ul { padding-left: 0; text-align: left; list-style: none; }
+.box li { padding: 6px 0; border-bottom: 1px solid #1d273f; font-size: 0.88rem; color: #ccc; }
+
+/* FAKE SOCIAL PROOF TOAST */
+#notif {
+    position: fixed;
+    bottom: 85px;
+    left: 20px;
+    background: #0f1526;
+    border: 1px solid var(--ml-gold);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.85rem;
+    display: none;
+    z-index: 9998;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+#notif span { color: var(--ml-gold); font-weight: 700; }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <div class="badge-tag">🎮 BATCH KHUSUS GAMER MLBB</div>
+    <h1>👑 DIGIPRIZE MOBILE LEGEND<br><span style="font-size: 1.2rem; color: #fff;">BEBAS PILIH 3 PRODUK DIGITAL + UNDIAN 50 PEMENANG MLBB</span></h1>
+
+    <div class="highlight-box">
+        <h3>🎁 HADIAH UNDIAN BATCH (PELUANG MENANG 25%)</h3>
+        <ul class="prize-list">
+            <li><span>🏆 <b>GRAND PRIZE:</b></span> <b style="color:var(--ml-gold)">4.000++ Diamond MLBB</b></li>
+            <li><span>🥇 <b>2 Pemenang A:</b></span> <span>800++ Diamond MLBB</span></li>
+            <li><span>🥈 <b>3 Pemenang B:</b></span> <span>400++ Diamond MLBB</span></li>
+            <li><span>🥉 <b>15 Pemenang C:</b></span> <span>160++ Diamond MLBB</span></li>
+            <li><span>✨ <b>29 Pemenang D:</b></span> <span>70++ Diamond MLBB</span></li>
+        </ul>
+        <div class="note-box">
+            🔥 <b>TOTAL 50 PEMENANG DARI 200 PESERTA!</b> Hampir 1 dari setiap 4 pembeli <b>PASTI MENANG UNDIAN!</b>
+        </div>
+    </div>
+
+    <p style="font-size: 0.9rem; margin-bottom: 20px;">
+        🛡️ Dapatkan Akses Langsung ke <b>3 Produk Digital Premium</b> pilihan + 1 Tiket Undian MLBB.
+    </p>
+
+    <a href="http://lynk.id/ncv699/wwl8dxylpy8r" class="btn">AMBIL PAKET SEKARANG</a>
+</section>
+
+<!-- 3 KEY ADVANTAGES GRID -->
+<section class="grid">
+    <div class="card">
+        <h3>📦 3 Produk Digital</h3>
+        <p>Beli 1 paket, bebas pilih 3 produk digital favorit dari ratusan pilihan!</p>
+    </div>
+    <div class="card">
+        <h3>🎯 Peluang Menang 25%</h3>
+        <p>Rasio menang undian super tinggi! Kuota ketat hanya untuk 200 pembeli per batch.</p>
+    </div>
+    <div class="card">
+        <h3>⚡ Cashback Garansi 100%</h3>
+        <p>Semua pembeli PASTI DAPAT Diamond tambahan gratis jika kuota batch selesai cepat!</p>
+    </div>
+</section>
+
+<!-- SPEED CASHBACK GARANSI 100% SECTION -->
+<section class="speed-container">
+    <h2 style="color: var(--green-cash); text-align: center; margin-bottom: 10px;">⚡ HADIAH PERCEPATAN BATCH (GARANSI 100% PASTI DAPAT)</h2>
+    <p style="text-align: center; font-size: 0.9rem; margin-bottom: 20px;">
+        Semakin cepat kuota 200 pembeli terpenuhi, <b>SELURUH 200 PEMBELI GARANSI PASTI MENDAPATKAN CASHBACK DIAMOND!</b> (Tanpa Diundi!)
+    </p>
+
+    <div class="speed-item">
+        <span>🔥 Batch Penuh dalam <b>1 HARI (FLASH)</b></span>
+        <b style="color: var(--green-cash);">+59 Diamond MLBB / orang (PASTI DAPAT!)</b>
+    </div>
+    <div class="speed-item" style="border-left-color: var(--ml-gold);">
+        <span>⏰ Batch Penuh dalam <b>3 HARI</b></span>
+        <b style="color: var(--ml-gold);">+44 Diamond MLBB / orang (PASTI DAPAT!)</b>
+    </div>
+    <div class="speed-item" style="border-left-color: var(--ml-blue);">
+        <span>📅 Batch Penuh dalam <b>7 HARI</b></span>
+        <b style="color: var(--ml-blue);">+36 Diamond MLBB / orang (PASTI DAPAT!)</b>
+    </div>
+
+    <p style="text-align: center; font-size: 0.8rem; margin-top: 15px; opacity: 0.8;">
+        *Ajak teman mabar kamu membeli agar kuota batch cepat penuh dan cashback garansi langsung cair ke akun kalian!
+    </p>
+</section>
+
+<!-- REFERRAL PROGRAM -->
+<section class="section" style="border: 2px solid var(--ml-gold);">
+    <h2 class="section-title">🤝 PROGRAM REFERRAL SULTAN</h2>
+    <p style="text-align: center; font-size: 0.95rem;">
+        Bagikan kode referral kamu setelah membeli, dan raih keuntungan berlipat:
+    </p>
+    <div style="background: rgba(252, 224, 116, 0.08); padding: 15px; border-radius: 12px; margin-top: 15px; text-align: center;">
+        💸 <b>Komisi Langsung:</b> Rp5.000 / teman yang bergabung.<br>
+        👑 <b>BONUS REFERRAL GRAND PRIZE:</b> Jika teman yang kamu ajak memenangkan Grand Prize (4.000 DM), <br>
+        <span style="color: var(--ml-gold); font-size: 1.1rem; font-weight: 800;">KAMU LANGSUNG DAPAT STARLIGHT MEMBER + 580++ DIAMOND GRATIS!</span>
+    </div>
+</section>
+
+<!-- KATALOG PRODUK DIGITAL SECTION -->
+<section class="section">
+    <h2 class="section-title">📂 PILIH 3 PRODUK DIGITAL KAMU</h2>
+    <p style="text-align: center; font-size: 0.88rem; margin-bottom: 20px; opacity: 0.8;">
+        Klik kategori di bawah untuk melihat rincian produk yang bisa kamu klaim setelah pembayaran:
+    </p>
+
+    <div class="grid">
+        <div class="prod-card" onclick="openProduk('ebook')">
+            <h3>💰 Ebook & Ecourse Cuan</h3>
+            <p>16+ Panduan Bisnis & Monetisasi</p>
+        </div>
+        <div class="prod-card" onclick="openProduk('video')">
+            <h3>🚀 Video Viral Factory</h3>
+            <p>35.000+ Bahan Konten Tanpa Watermark</p>
+        </div>
+        <div class="prod-card" onclick="openProduk('ai')">
+            <h3>🤖 AI & Auto Money Tools</h3>
+            <p>Prompt AI, Trading Bot & Scalper</p>
+        </div>
+        <div class="prod-card" onclick="openProduk('trading')">
+            <h3>📊 Trading & Profit Lab</h3>
+            <p>Indikator MT4 & Forex Gold Catcher</p>
+        </div>
+        <div class="prod-card" onclick="openProduk('creator')">
+            <h3>🎨 Creator & Design Hub</h3>
+            <p>Template PPT, IG Feed & Blogspot</p>
+        </div>
+        <div class="prod-card" onclick="openProduk('entertainment')">
+            <h3>🎬 Entertainment Vault</h3>
+            <p>150 Game PC & FM 2024 Update MLBB</p>
+        </div>
+    </div>
+</section>
+
+<!-- HOW TO ORDER / USER JOURNEY -->
+<section class="section">
+    <h2 class="section-title">🗺️ CARA PEMANTAUAN & TRANSAKSI</h2>
+    <div class="step-grid">
+        <div class="step-card">
+            <div class="step-num">1</div>
+            <b>Beli Paket</b>
+            <p style="font-size: 0.78rem;">Klik tombol Order & selesaikan pembayaran via Lynk.id.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">2</div>
+            <b>Isi Form</b>
+            <p style="font-size: 0.78rem;">Pilih 3 Produk Digital, masukkan ID MLBB & Zone ID, serta Kode Referral.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">3</div>
+            <b>Akses Produk</b>
+            <p style="font-size: 0.78rem;">Langsung terima link download 3 Produk Digital milikmu.</p>
+        </div>
+        <div class="step-card">
+            <div class="step-num">4</div>
+            <b>Klaim Hadiah</b>
+            <p style="font-size: 0.78rem;">Nomor undian terdaftar otomatis di batch aktif & ikuti pengundian!</p>
+        </div>
+    </div>
+</section>
+
+<!-- BOTTOM CTA HERO -->
+<section class="hero" style="border-color: var(--ml-gold);">
+    <h2>KUOTA TERBATAS 200 SEAT PER BATCH!</h2>
+    <p>Dapatkan 3 produk digitalnya, raih peluang 50 pemenang Diamond MLBB sekarang juga!</p>
+    <a href="http://lynk.id/ncv699/wwl8dxylpy8r" class="btn">DAFTAR BATCH SEKARANG</a>
+</section>
+
+</div>
+
+<!-- STICKY BOTTOM BAR -->
+<div class="sticky">
+    <a href="http://lynk.id/ncv699/wwl8dxylpy8r" class="order-btn">AMBIL PAKET DIGIPRIZE SEKARANG</a>
+    <a href="https://wa.me/6283142225207?text=Halo%20Admin,%20saya%20ingin%20tanya%20paket%20Digiprize%20Mobile%20Legend" class="wa-btn">KONSULTASI WA</a>
+</div>
+
+<footer>
+    © 2026 DigiPrize Mobile Legend. All Rights Reserved.
+</footer>
+
+<!-- POPUP PRODUCT DETAIL MODAL -->
+<div id="popupProduk" onclick="closeProdukOutside(event)">
+    <div class="box" onclick="event.stopPropagation()">
+        <h3 id="produkTitle"></h3>
+        <ul id="produkList"></ul>
+        <a href="http://lynk.id/ncv699/wwl8dxylpy8r" class="btn" style="display:block; margin-top:20px; font-size: 1rem;">ORDER PAKET INI & PILIH PRODUK</a>
+        <button onclick="closeProduk()" style="background:none; border:none; color:#aaa; font-size:.8rem; margin-top:15px; cursor:pointer">Tutup Window</button>
+    </div>
+</div>
+
+<!-- FAKE SOCIAL PROOF TOAST -->
+<div id="notif">
+    <span id="notifName">Rizky MLBB</span> (<span id="notifPhone">0813*****201</span>)<br>
+    baru saja membeli Paket Digiprize MLBB! 🎉
+</div>
+
+<script>
+// KATALOG DATA PRODUK DIGITAL
+const produkData = {
+    ebook:{
+        title:"EBOOK & ECOURSE CUANABLE",
+        items:[
+            "Ebook 100 Juta Pertama dari Toko Online",
+            "Ebook 125 Contekan Iklan Tinggal Copy Paste",
+            "Ebook Modal AI dapat Cuan",
+            "Ebook 200 Prompt AI Kucing",
+            "Ebook 1000$ Per Bulan",
+            "Ebook Dropship Mastery",
+            "Ebook Technical Analysis For Mega Profit",
+            "Ebook Tutorial Shorts Siap Monet",
+            "Ebook Tutorial Banjir Orderan dari Etsy",
+            "Ebook Panduan Praktis Membuat Cerita Fiksi",
+            "Ecourse Dewa Selling",
+            "Ecourse Dropship Facebook",
+            "Ecourse Facebook Pro - Cara Cuan dari FB Pro",
+            "Ecourse Materi Komunitas Kreator",
+            "E-Course Digital Ads Mastery",
+            "Ecourse Youtube Alur Cerita Film"
+        ]
+    },
+    video:{
+        title:"VIDEO VIRAL FACTORY",
+        items:[
+            "Video Konten Lucu - Hiburan - No Watermark",
+            "Video Konten Kucing - No Watermark",
+            "3600+ Video Review Produk Unik",
+            "6.000++ Video Shopee Affiliate & Link",
+            "1500+ Video Konten Tools Tips Peralatan",
+            "1000+ Video Konten Mainan Anak Anak",
+            "1500+ Video Mobil Mewah Sport",
+            "1500+ Video Gagal Lucu",
+            "1000+ Video Alam Pemandangan",
+            "7500 Video Konten Video Viral",
+            "4500++ Video Sale Sosmed Tinggal Upload",
+            "1000+ Video Kuliner Unik India",
+            "5000+ Video Konten Lucu Kocak",
+            "1000++ Cuplikan Film Siap Upload",
+            "1000+ Video Stock Footage Landscape Angker",
+            "Video Konten Game Mobile Legend",
+            "Paket 35.000++ Video Konten No Watermark"
+        ]
+    },
+    ai:{
+        title:"AI & AUTO MONEY TOOLS",
+        items:[
+            "Bot AI Chat-GPT ULTRASCALPER 15 Menit",
+            "Bot AI Chat-GPT PRIMESWING 1 Jam",
+            "Bot AI Chat-GPT MASTER CALL 12 tahun trained",
+            "Tool Generator Prompt Voxel Forest Lab",
+            "Tool Prompt Alam Penenang Pikiran Gelisah"
+        ]
+    },
+    trading:{
+        title:"TRADING & PROFIT LAB",
+        items:[
+            "Bot Forex Gold Catcher V3",
+            "Indicator MT4 Pattern Candlestick",
+            "Indicator MT4 Short Trading",
+            "Indicator MT4 Spider Strategy"
+        ]
+    },
+    creator:{
+        title:"CREATOR & DESIGN HUB",
+        items:[
+            "Template PPT Pendidikan Guru Kreatif",
+            "Template PPT Presentation Maniac",
+            "Gudang Template Power Point V.02",
+            "Template IG Feed dan Story",
+            "Template Tema Blogger Blogspot",
+            "Premium Elementor Template",
+            "Toko Whatsapp Blogspot"
+        ]
+    },
+    entertainment:{
+        title:"ENTERTAINMENT VAULT",
+        items:[
+            "150 Game PC Dari Gamehouse",
+            "FM 2024 Update Liga Indonesia 2026"
+        ]
+    }
+};
+
+// MODAL FUNCTIONALITY
+function openProduk(k){
+    document.getElementById("popupProduk").style.display="flex";
+    document.getElementById("produkTitle").innerText=produkData[k].title;
+    let list="";
+    produkData[k].items.forEach(i=>{list+=`<li>• ${i}</li>`});
+    document.getElementById("produkList").innerHTML=list;
+}
+
+function closeProduk(){ document.getElementById("popupProduk").style.display="none"; }
+function closeProdukOutside(e){ if(e.target.id==="popupProduk") closeProduk(); }
+
+// FAKE SOCIAL PROOF TOAST
+const names=["Rizky MLBB","SultanGamer","Dewi_Ayu","Budi_Pro","Fajar_Mythic","Hendra_S","Putra_Gamer"];
+function randomPhone(){
+    const start=["0812","0813","0852","0877","0896"];
+    return start[Math.floor(Math.random()*start.length)]+"*****"+Math.floor(100+Math.random()*900);
+}
+
+function showNotif(){
+    document.getElementById("notifName").innerText=names[Math.floor(Math.random()*names.length)];
+    document.getElementById("notifPhone").innerText=randomPhone();
+    const notif=document.getElementById("notif");
+    notif.style.display="block";
+    setTimeout(()=>{ notif.style.display="none"; }, 4000);
+}
+setInterval(showNotif, 16000);
+</script>
+
+</body>
+</html>
